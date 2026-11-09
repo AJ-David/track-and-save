@@ -115,6 +115,11 @@ export function AuthProvider({ children }) {
       throw new Error('Supabase is not configured yet. Please check your .env credentials.');
     }
 
+    const redirectUrl =
+      typeof window !== 'undefined' && window.location.origin
+        ? `${window.location.origin}/dashboard`
+        : 'https://track-and-save.vercel.app/dashboard';
+
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -123,6 +128,7 @@ export function AuthProvider({ children }) {
           full_name: fullName,
           currency,
         },
+        emailRedirectTo: redirectUrl,
       },
     });
 
