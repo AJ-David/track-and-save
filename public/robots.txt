@@ -12,5 +12,5 @@ Disallow: /analytics
 Disallow: /settings
 Disallow: /reset-password
 
-Sitemap: https://trackandsave.vercel.app/sitemap.xml
+Sitemap: https://track-and-save.vercel.app/sitemap.xml
 
