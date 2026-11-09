@@ -16,7 +16,8 @@ import {
   Command,
   CornerDownLeft,
   ArrowRight,
-  Wallet,
+  ChevronUp,
+  ChevronDown,
 } from 'lucide-react';
 import { formatCurrency, formatDate } from '../../lib/formatters';
 
@@ -119,6 +120,7 @@ export default function SpotlightSearchModal({
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef(null);
   const resultsContainerRef = useRef(null);
+  const isNavigatingWithKeys = useRef(false);
   const navigate = useNavigate();
 
   // Reset query and focus input when modal opens
@@ -126,6 +128,7 @@ export default function SpotlightSearchModal({
     if (isOpen) {
       setQuery('');
       setSelectedIndex(0);
+      isNavigatingWithKeys.current = false;
       setTimeout(() => {
         inputRef.current?.focus();
       }, 50);
@@ -186,7 +189,7 @@ export default function SpotlightSearchModal({
           amt.includes(clean)
         );
       })
-      .slice(0, 6)
+      .slice(0, 8)
       .map((t) => ({
         id: `tx-${t.id}`,
         title: t.description || 'Untitled Transaction',
@@ -264,6 +267,21 @@ export default function SpotlightSearchModal({
     });
   }, [flattenedItems]);
 
+  // Auto-scroll selected item into view whenever selectedIndex changes
+  useEffect(() => {
+    if (!isOpen) return;
+    const activeEl = resultsContainerRef.current?.querySelector(
+      `[data-item-index="${selectedIndex}"]`
+    );
+    if (activeEl) {
+      activeEl.scrollIntoView({
+        block: 'nearest',
+        behavior: isNavigatingWithKeys.current ? 'smooth' : 'auto',
+      });
+      isNavigatingWithKeys.current = false;
+    }
+  }, [selectedIndex, isOpen]);
+
   // Execute selection
   const handleSelect = (item) => {
     if (!item) return;
@@ -279,9 +297,11 @@ export default function SpotlightSearchModal({
 
     if (e.key === 'ArrowDown') {
       e.preventDefault();
+      isNavigatingWithKeys.current = true;
       setSelectedIndex((prev) => (prev + 1) % flattenedItems.length);
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
+      isNavigatingWithKeys.current = true;
       setSelectedIndex((prev) => (prev - 1 + flattenedItems.length) % flattenedItems.length);
     } else if (e.key === 'Enter') {
       e.preventDefault();
@@ -316,6 +336,7 @@ export default function SpotlightSearchModal({
             onChange={(e) => {
               setQuery(e.target.value);
               setSelectedIndex(0);
+              isNavigatingWithKeys.current = false;
             }}
             onKeyDown={handleKeyDown}
             placeholder="Search transactions, budgets, goals, or pages..."
@@ -326,9 +347,10 @@ export default function SpotlightSearchModal({
               onClick={() => {
                 setQuery('');
                 setSelectedIndex(0);
+                isNavigatingWithKeys.current = false;
                 inputRef.current?.focus();
               }}
-              className="p-1 rounded-lg text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800 transition-colors mr-2"
+              className="p-1 rounded-lg text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800 transition-colors mr-2 cursor-pointer"
               title="Clear search"
             >
               <X className="w-4 h-4" />
@@ -341,7 +363,7 @@ export default function SpotlightSearchModal({
           )}
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 transition-colors"
+            className="p-1.5 rounded-lg text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 transition-colors cursor-pointer"
             title="Close (Esc)"
           >
             <X className="w-5 h-5" />
@@ -351,7 +373,7 @@ export default function SpotlightSearchModal({
         {/* Results List */}
         <div
           ref={resultsContainerRef}
-          className="flex-1 overflow-y-auto p-3 space-y-4 max-h-[58vh] divide-y divide-zinc-800/50"
+          className="flex-1 overflow-y-auto p-3 space-y-4 max-h-[58vh] divide-y divide-zinc-800/50 scroll-smooth"
         >
           {flattenedItems.length === 0 ? (
             <div className="py-12 text-center">
@@ -385,11 +407,15 @@ export default function SpotlightSearchModal({
                       <button
                         key={item.id}
                         type="button"
+                        data-item-index={itemGlobalIndex}
                         onClick={() => handleSelect(item)}
-                        onMouseEnter={() => setSelectedIndex(itemGlobalIndex)}
-                        className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-left transition-all duration-100 ${
+                        onMouseEnter={() => {
+                          isNavigatingWithKeys.current = false;
+                          setSelectedIndex(itemGlobalIndex);
+                        }}
+                        className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-left transition-all duration-100 cursor-pointer ${
                           isSelected
-                            ? 'bg-red-950/40 border border-red-800/60 text-white shadow-md shadow-red-950/30'
+                            ? 'bg-red-950/50 border border-red-800/80 text-white shadow-md shadow-red-950/40 ring-1 ring-red-700/50'
                             : 'border border-transparent text-zinc-300 hover:bg-zinc-900/60'
                         }`}
                       >
@@ -458,33 +484,75 @@ export default function SpotlightSearchModal({
           )}
         </div>
 
-        {/* Keyboard Navigation Footer */}
-        <div className="px-4 py-2.5 border-t border-zinc-800/80 bg-[#0c0d12] flex items-center justify-between text-xs text-zinc-500">
-          <div className="flex items-center gap-3">
-            <span className="flex items-center gap-1">
-              <kbd className="px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-[10px] font-mono text-zinc-400">
-                ↑
-              </kbd>
-              <kbd className="px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-[10px] font-mono text-zinc-400">
-                ↓
-              </kbd>
-              <span className="ml-0.5">Navigate</span>
-            </span>
-            <span className="flex items-center gap-1">
-              <kbd className="px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-[10px] font-mono text-zinc-400">
+        {/* Keyboard & Click Navigation Footer */}
+        <div className="px-4 py-2.5 border-t border-zinc-800/80 bg-[#0c0d12] flex flex-wrap items-center justify-between gap-2 text-xs text-zinc-500">
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Interactive Navigate & Scroll Buttons */}
+            <div className="flex items-center bg-zinc-900 border border-zinc-800 rounded-lg p-0.5">
+              <button
+                type="button"
+                onClick={() => {
+                  if (flattenedItems.length === 0) return;
+                  isNavigatingWithKeys.current = true;
+                  setSelectedIndex((prev) => (prev - 1 + flattenedItems.length) % flattenedItems.length);
+                }}
+                className="p-1 rounded hover:bg-zinc-800 hover:text-white text-zinc-400 transition-colors cursor-pointer"
+                title="Scroll up to previous item (Arrow Up)"
+                aria-label="Previous item"
+              >
+                <ChevronUp className="w-3.5 h-3.5" />
+              </button>
+              <div className="w-[1px] h-3.5 bg-zinc-800 mx-0.5" />
+              <button
+                type="button"
+                onClick={() => {
+                  if (flattenedItems.length === 0) return;
+                  isNavigatingWithKeys.current = true;
+                  setSelectedIndex((prev) => (prev + 1) % flattenedItems.length);
+                }}
+                className="p-1 rounded hover:bg-zinc-800 hover:text-white text-zinc-400 transition-colors cursor-pointer"
+                title="Scroll down to next item (Arrow Down)"
+                aria-label="Next item"
+              >
+                <ChevronDown className="w-3.5 h-3.5" />
+              </button>
+              <span className="text-[11px] font-medium text-zinc-400 px-2">Navigate</span>
+            </div>
+
+            {/* Select Action Button */}
+            <button
+              type="button"
+              onClick={() => {
+                const current = flattenedItems[selectedIndex];
+                if (current) handleSelect(current);
+              }}
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 hover:text-zinc-200 text-zinc-400 transition-colors cursor-pointer"
+              title="Select active item (Enter)"
+            >
+              <kbd className="px-1 py-0.5 rounded bg-zinc-950 border border-zinc-800 text-[10px] font-mono text-zinc-400">
                 ↵
               </kbd>
-              <span className="ml-0.5">Select</span>
-            </span>
-            <span className="flex items-center gap-1">
-              <kbd className="px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-[10px] font-mono text-zinc-400">
+              <span className="text-[11px] font-medium hidden xs:inline">Select</span>
+            </button>
+
+            {/* Close Button */}
+            <button
+              type="button"
+              onClick={onClose}
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 hover:text-zinc-200 text-zinc-400 transition-colors cursor-pointer"
+              title="Close modal (Esc)"
+            >
+              <kbd className="px-1 py-0.5 rounded bg-zinc-950 border border-zinc-800 text-[10px] font-mono text-zinc-400">
                 Esc
               </kbd>
-              <span className="ml-0.5">Close</span>
-            </span>
+              <span className="text-[11px] font-medium hidden xs:inline">Close</span>
+            </button>
           </div>
-          <span className="hidden sm:inline text-zinc-600 font-mono text-[11px]">
-            Track & Save Global Search
+
+          <span className="text-zinc-500 font-mono text-[11px]">
+            {flattenedItems.length > 0
+              ? `${selectedIndex + 1} of ${flattenedItems.length} items`
+              : 'Spotlight Search'}
           </span>
         </div>
       </div>
