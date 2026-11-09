@@ -15,7 +15,7 @@ import {
 import { useApp } from '../../contexts/AppContext';
 import { useAuth } from '../../contexts/AuthContext';
 import { useLocation, Link } from 'react-router-dom';
-import { CURRENCIES } from '../../lib/constants';
+import { CURRENCIES, APP_NAME } from '../../lib/constants';
 import { useBudgets } from '../../hooks/useBudgets';
 import { useTransactions } from '../../hooks/useTransactions';
 import { useSavings } from '../../hooks/useSavings';
@@ -34,7 +34,7 @@ export default function Header() {
   const { toggleSidebar, currency, setCurrency } = useApp();
   const { user, profile } = useAuth();
   const location = useLocation();
-  const pageTitle = pageTitles[location.pathname] || 'SpendWise';
+  const pageTitle = pageTitles[location.pathname] || APP_NAME;
 
   // Notifications state
   const [notificationsOpen, setNotificationsOpen] = useState(false);
@@ -163,7 +163,7 @@ export default function Header() {
     list.push({
       id: 'system-welcome',
       type: 'system',
-      title: 'Welcome to SpendWise',
+      title: `Welcome to ${APP_NAME} (T&S)`,
       message: 'Your personal finance ledger is secured and synced in real-time.',
       link: '/dashboard',
       time: 'System',

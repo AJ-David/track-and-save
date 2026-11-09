@@ -14,7 +14,7 @@ export default class ErrorBoundary extends React.Component {
 
   componentDidCatch(error, errorInfo) {
     this.setState({ errorInfo });
-    console.error('SpendWise Caught an Error:', error, errorInfo);
+    console.error('Track & Save Caught an Error:', error, errorInfo);
   }
 
   handleReload = () => {

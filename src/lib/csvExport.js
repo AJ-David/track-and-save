@@ -51,7 +51,7 @@ export function exportTransactionsToCSV(transactions = [], currencyCode = 'NGN')
 
   const todayStr = new Date().toISOString().split('T')[0];
   link.setAttribute('href', url);
-  link.setAttribute('download', `spendwise_transactions_${todayStr}.csv`);
+  link.setAttribute('download', `track_and_save_transactions_${todayStr}.csv`);
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);

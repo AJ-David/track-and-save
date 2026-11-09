@@ -1,6 +1,6 @@
-# SpendWise — Modern Personal Finance & Expense Tracker
+# Track & Save (T&S) — Smart Income, Expense & Budget Tracker
 
-SpendWise is a responsive, full-stack personal finance web application built to help users take control of their finances with real-time income and expense tracking, categorical budgets with overspend alerts, goal-oriented savings trackers, interactive cashflow analytics, multi-currency conversion, and bank-grade PostgreSQL security.
+**Track & Save (T&S)** is a responsive, modern personal finance web application built to help users take total control of their financial life: real-time income and expense tracking, intelligent monthly budget allocation with overspend alerts, goal-oriented savings milestones, interactive cashflow analytics, multi-currency support, and bank-grade PostgreSQL security.
 
 ---
 

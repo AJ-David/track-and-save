@@ -12,4 +12,5 @@ Disallow: /analytics
 Disallow: /settings
 Disallow: /reset-password
 
-Sitemap: https://spendwise.com/sitemap.xml
+Sitemap: https://trackandsave.vercel.app/sitemap.xml
+

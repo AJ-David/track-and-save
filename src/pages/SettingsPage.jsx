@@ -68,7 +68,7 @@ export default function SettingsPage() {
 
   const handleSignOut = async () => {
     await signOut();
-    toast.info('Signed out of SpendWise');
+    toast.info('Signed out of Track & Save');
     navigate('/login');
   };
 
@@ -107,7 +107,7 @@ export default function SettingsPage() {
               </label>
               <input
                 type="email"
-                value={user?.email || profile?.email || 'user@spendwise.com'}
+                value={user?.email || profile?.email || 'user@trackandsave.com'}
                 className="w-full px-3 py-2 bg-gray-100 border border-gray-200 rounded-xl text-sm text-gray-500 cursor-not-allowed outline-none"
                 disabled
               />
@@ -191,7 +191,7 @@ export default function SettingsPage() {
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-base font-semibold text-gray-800">Sign Out</h3>
-            <p className="text-sm text-gray-500 mt-0.5">End your active SpendWise session.</p>
+            <p className="text-sm text-gray-500 mt-0.5">End your active Track &amp; Save session.</p>
           </div>
           <Button
             variant="danger"

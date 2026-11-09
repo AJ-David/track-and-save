@@ -60,8 +60,8 @@ export default function RegisterPage() {
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         {/* Brand */}
         <div className="flex justify-center items-center gap-3 mb-4">
-          <div className="w-11 h-11 rounded-2xl bg-emerald-500 flex items-center justify-center shadow-lg shadow-emerald-500/25">
-            <Wallet className="w-6 h-6 text-white" />
+          <div className="w-11 h-11 rounded-2xl bg-emerald-500 flex items-center justify-center font-black text-white text-base tracking-wider shadow-lg shadow-emerald-500/25">
+            T&amp;S
           </div>
           <span className="text-2xl font-extrabold text-gray-900 tracking-tight">
             {APP_NAME}

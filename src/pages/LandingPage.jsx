@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import { Wallet, ArrowRight, ShieldCheck, PieChart, Sparkles } from 'lucide-react';
+import { ArrowRight, ShieldCheck, PieChart, Sparkles, Target, Wallet, Layers } from 'lucide-react';
 import Button from '../components/ui/Button';
-import { APP_NAME } from '../lib/constants';
+import { APP_NAME, APP_SHORT_NAME, APP_TAGLINE } from '../lib/constants';
 import { useAuth } from '../contexts/AuthContext';
 
 export default function LandingPage() {
@@ -12,10 +12,17 @@ export default function LandingPage() {
       {/* Navbar */}
       <nav className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto w-full">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-emerald-500 flex items-center justify-center shadow-lg shadow-emerald-500/20">
-            <Wallet className="w-5 h-5 text-white" />
+          <div className="w-10 h-10 rounded-2xl bg-emerald-500 flex items-center justify-center font-black text-white text-sm tracking-wider shadow-lg shadow-emerald-500/25">
+            {APP_SHORT_NAME}
           </div>
-          <span className="text-xl font-bold text-gray-900 tracking-tight">{APP_NAME}</span>
+          <div>
+            <span className="text-xl font-bold text-gray-900 tracking-tight block leading-none">
+              {APP_NAME}
+            </span>
+            <span className="text-[10px] text-emerald-600 font-semibold tracking-wider uppercase">
+              Income &bull; Budget &bull; Save
+            </span>
+          </div>
         </div>
         <div className="flex items-center gap-3">
           {isAuthenticated ? (
@@ -43,18 +50,19 @@ export default function LandingPage() {
         <div className="max-w-3xl text-center">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-emerald-50 text-emerald-700 border border-emerald-200/60 rounded-full text-xs font-semibold uppercase tracking-wider mb-8 shadow-sm">
             <Sparkles className="w-3.5 h-3.5 text-emerald-500" />
-            Smart personal finance &amp; expense intelligence
+            Smart Income, Expense &amp; Budget Intelligence
           </div>
 
           <h1 className="text-4xl sm:text-6xl font-extrabold text-gray-900 leading-[1.15] tracking-tight mb-6">
-            Master your money with{' '}
+            Track your money.{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500">
-              effortless clarity
-            </span>
+              Control your budget.
+            </span>{' '}
+            Grow your savings.
           </h1>
 
           <p className="text-lg text-gray-600 max-w-xl mx-auto mb-10 leading-relaxed font-normal">
-            Track expenses, budget with precision, reach ambitious savings goals, and understand your financial trajectory with a delightful SaaS experience.
+            <strong>{APP_NAME} ({APP_SHORT_NAME})</strong> gives you complete financial clarity. Effortlessly track income and daily expenses, set category budget caps with overflow alerts, and fund your ambitious savings milestones.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3.5 justify-center items-center">
@@ -73,35 +81,41 @@ export default function LandingPage() {
             )}
           </div>
 
-          {/* Value Props */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-16 pt-12 border-t border-gray-100 max-w-2xl mx-auto text-left">
-            <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center flex-shrink-0 text-emerald-600">
-                <ShieldCheck className="w-4 h-4" />
+          {/* 3 Core Pillars: Track, Budget, Save */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-16 pt-12 border-t border-gray-100 max-w-3xl mx-auto text-left">
+            <div className="flex items-start gap-3.5">
+              <div className="w-9 h-9 rounded-xl bg-emerald-50 flex items-center justify-center flex-shrink-0 text-emerald-600">
+                <Wallet className="w-5 h-5" />
               </div>
               <div>
-                <h4 className="text-sm font-semibold text-gray-800">Bank-Grade Privacy</h4>
-                <p className="text-xs text-gray-400 mt-0.5">PostgreSQL Row-Level Security keeps your records private.</p>
+                <h4 className="text-sm font-bold text-gray-900">1. Track Income &amp; Expenses</h4>
+                <p className="text-xs text-gray-500 mt-1 leading-relaxed">
+                  Real-time ledger with categories, multi-currency (NGN, USD, EUR, GBP), and instant search.
+                </p>
               </div>
             </div>
 
-            <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center flex-shrink-0 text-blue-600">
-                <PieChart className="w-4 h-4" />
+            <div className="flex items-start gap-3.5">
+              <div className="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0 text-blue-600">
+                <Layers className="w-5 h-5" />
               </div>
               <div>
-                <h4 className="text-sm font-semibold text-gray-800">Visual Analytics</h4>
-                <p className="text-xs text-gray-400 mt-0.5">Live cashflow area curves and category distribution charts.</p>
+                <h4 className="text-sm font-bold text-gray-900">2. Allocate Monthly Budgets</h4>
+                <p className="text-xs text-gray-500 mt-1 leading-relaxed">
+                  Set category spending caps with smart alerts before you overspend.
+                </p>
               </div>
             </div>
 
-            <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center flex-shrink-0 text-purple-600">
-                <Wallet className="w-4 h-4" />
+            <div className="flex items-start gap-3.5">
+              <div className="w-9 h-9 rounded-xl bg-purple-50 flex items-center justify-center flex-shrink-0 text-purple-600">
+                <Target className="w-5 h-5" />
               </div>
               <div>
-                <h4 className="text-sm font-semibold text-gray-800">Multi-Currency</h4>
-                <p className="text-xs text-gray-400 mt-0.5">Defaulted to NGN (₦) with instant USD, EUR, and GBP support.</p>
+                <h4 className="text-sm font-bold text-gray-900">3. Grow Savings Milestones</h4>
+                <p className="text-xs text-gray-500 mt-1 leading-relaxed">
+                  Set target deadlines, track progress bars, and deposit funds to build wealth.
+                </p>
               </div>
             </div>
           </div>
@@ -111,7 +125,7 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="py-6 text-center border-t border-gray-100 bg-white/50">
         <p className="text-xs text-gray-400">
-          &copy; {new Date().getFullYear()} {APP_NAME}. Built with React, Supabase &amp; Tailwind CSS.
+          &copy; {new Date().getFullYear()} {APP_NAME} ({APP_SHORT_NAME}). All rights reserved. Built with React, Supabase &amp; Tailwind CSS.
         </p>
       </footer>
     </div>

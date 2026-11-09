@@ -68,10 +68,13 @@ export default function Sidebar() {
         {/* Logo & Brand */}
         <div className="flex items-center justify-between px-6 py-6 border-b border-white/5">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-emerald-500 flex items-center justify-center">
-              <Wallet className="w-5 h-5 text-white" />
+            <div className="w-9 h-9 rounded-xl bg-emerald-500 flex items-center justify-center font-black text-white text-xs tracking-wider shadow-md shadow-emerald-500/30">
+              T&amp;S
             </div>
-            <span className="text-lg font-bold text-white tracking-tight">{APP_NAME}</span>
+            <div>
+              <span className="text-base font-bold text-white tracking-tight block leading-tight">{APP_NAME}</span>
+              <span className="text-[10px] text-emerald-400 font-semibold uppercase tracking-wider block">Income &bull; Budget &bull; Save</span>
+            </div>
           </div>
           <button
             onClick={closeSidebar}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Wallet, Lock, Eye, EyeOff, ArrowRight, AlertCircle, CheckCircle2, KeyRound, Mail } from 'lucide-react';
+import { Lock, Eye, EyeOff, ArrowRight, AlertCircle, CheckCircle2, KeyRound, Mail } from 'lucide-react';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
 import Spinner from '../components/ui/Spinner';
@@ -106,8 +106,8 @@ export default function ResetPasswordPage() {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-emerald-50/20 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center items-center gap-3 mb-4">
-          <div className="w-11 h-11 rounded-2xl bg-emerald-500 flex items-center justify-center shadow-lg shadow-emerald-500/25">
-            <Wallet className="w-6 h-6 text-white" />
+          <div className="w-11 h-11 rounded-2xl bg-emerald-500 flex items-center justify-center font-black text-white text-base tracking-wider shadow-lg shadow-emerald-500/25">
+            T&amp;S
           </div>
           <span className="text-2xl font-extrabold text-gray-900 tracking-tight">
             {APP_NAME}

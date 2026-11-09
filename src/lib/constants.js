@@ -1,8 +1,10 @@
 /**
- * Application-wide constants for SpendWise.
+ * Application-wide constants for Track & Save (T&S).
  */
 
-export const APP_NAME = 'SpendWise';
+export const APP_NAME = 'Track & Save';
+export const APP_SHORT_NAME = 'T&S';
+export const APP_TAGLINE = 'Track your money. Allocate your budget. Grow your savings.';
 
 export const CURRENCIES = {
   NGN: { code: 'NGN', symbol: '₦', name: 'Nigerian Naira', locale: 'en-NG' },
