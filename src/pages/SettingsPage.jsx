@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { User, Globe, Palette, Shield, LogOut, Check, Save } from 'lucide-react';
+import { User, Globe, Palette, Shield, LogOut, Check, Save, Moon, Sun } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
@@ -215,14 +215,51 @@ export default function SettingsPage() {
       {/* Appearance Settings */}
       <SettingSection
         icon={Palette}
-        title="Appearance"
-        description="Theme & visual style."
+        title="Appearance & Theme"
+        description="Choose your visual theme and interface atmosphere."
       >
-        <div className="flex gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+          {/* 1. Dark Mode (Mafia Noir) - Active */}
           <div
-            className="px-4 py-2 bg-red-950/60 border border-red-700/60 rounded-xl text-xs font-bold text-red-400 shadow-md shadow-red-950/60"
+            className="flex items-start gap-3 p-3.5 rounded-2xl bg-gradient-to-br from-[#161722] to-zinc-950 border-2 border-red-600/80 text-left shadow-lg shadow-red-950/40 relative"
           >
-            Mafia Noir Dark (Active)
+            <div className="w-9 h-9 rounded-xl bg-red-950/70 text-red-400 border border-red-800/60 flex items-center justify-center shrink-0">
+              <Moon className="w-5 h-5" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center justify-between gap-1">
+                <span className="text-sm font-bold text-white tracking-tight">Dark Mode</span>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-600 text-white shadow-sm shadow-red-900">
+                  Active
+                </span>
+              </div>
+              <p className="text-xs text-red-400 font-semibold mt-0.5">Mafia Noir Dark (Active)</p>
+              <p className="text-[11px] text-zinc-400 mt-1">
+                Pitch carbon canvas, obsidian surfaces, and blood-crimson accents.
+              </p>
+            </div>
+          </div>
+
+          {/* 2. Light Mode - Inactive / Coming Soon */}
+          <div
+            className="flex items-start gap-3 p-3.5 rounded-2xl bg-zinc-900/30 border border-dashed border-zinc-800 text-left opacity-55 cursor-not-allowed select-none relative"
+            title="Light mode will be implemented in a future update."
+          >
+            <div className="w-9 h-9 rounded-xl bg-zinc-800/60 text-zinc-500 border border-zinc-700/40 flex items-center justify-center shrink-0">
+              <Sun className="w-5 h-5" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center justify-between gap-1">
+                <span className="text-sm font-bold text-zinc-400 tracking-tight">Light Mode</span>
+                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 border border-zinc-700/60">
+                  Coming Soon
+                </span>
+              </div>
+              <p className="text-xs text-zinc-500 font-medium mt-0.5">Clean White Aesthetic</p>
+              <p className="text-[11px] text-zinc-500 mt-1">
+                Inactive. Scheduled for a future update.
+              </p>
+            </div>
           </div>
         </div>
       </SettingSection>
