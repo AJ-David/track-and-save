@@ -20,6 +20,7 @@ import { useBudgets } from '../../hooks/useBudgets';
 import { useTransactions } from '../../hooks/useTransactions';
 import { useSavings } from '../../hooks/useSavings';
 import { formatCurrency } from '../../lib/formatters';
+import SpotlightSearchModal from './SpotlightSearchModal';
 
 const pageTitles = {
   '/dashboard': 'Dashboard',
@@ -45,6 +46,20 @@ export default function Header() {
       return [];
     }
   });
+
+  // Global Spotlight Search state & keyboard shortcut (Ctrl+K / Cmd+K)
+  const [spotlightOpen, setSpotlightOpen] = useState(false);
+
+  useEffect(() => {
+    function handleGlobalKeyDown(e) {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setSpotlightOpen((prev) => !prev);
+      }
+    }
+    window.addEventListener('keydown', handleGlobalKeyDown);
+    return () => window.removeEventListener('keydown', handleGlobalKeyDown);
+  }, []);
 
   const dropdownRef = useRef(null);
 
@@ -230,14 +245,22 @@ export default function Header() {
             </select>
           </div>
 
-          {/* Search quick link */}
-          <Link
-            to="/transactions"
-            className="p-2 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
-            title="Search transactions"
+          {/* Global Spotlight Search Trigger */}
+          <button
+            type="button"
+            onClick={() => setSpotlightOpen(true)}
+            className="flex items-center gap-2 p-2 sm:px-3 sm:py-1.5 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-850 hover:bg-zinc-800/80 border border-transparent hover:border-zinc-700/60 transition-all group"
+            title="Global Spotlight Search (Ctrl + K)"
+            aria-label="Open Global Spotlight Search"
           >
-            <Search className="w-5 h-5" />
-          </Link>
+            <Search className="w-5 h-5 sm:w-4 sm:h-4 group-hover:text-red-400 transition-colors" />
+            <span className="hidden md:inline text-xs text-zinc-400 font-medium group-hover:text-zinc-200">
+              Search...
+            </span>
+            <kbd className="hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded border border-zinc-800 bg-zinc-900 text-[10px] font-mono text-zinc-500 group-hover:text-zinc-300 group-hover:border-zinc-700">
+              <span className="text-[10px]">⌘</span>K
+            </kbd>
+          </button>
 
           {/* Interactive Notifications Center */}
           <div className="relative" ref={dropdownRef}>
@@ -377,6 +400,16 @@ export default function Header() {
           </Link>
         </div>
       </div>
+
+      {/* Global Spotlight Search Modal */}
+      <SpotlightSearchModal
+        isOpen={spotlightOpen}
+        onClose={() => setSpotlightOpen(false)}
+        transactions={transactions}
+        budgets={budgets}
+        goals={goals}
+        currency={currency}
+      />
     </header>
   );
 }
