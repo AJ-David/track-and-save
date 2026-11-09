@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+Allow: /login
+Allow: /register
+
+# Disallow private user pages from search index
+Disallow: /dashboard
+Disallow: /transactions
+Disallow: /budgets
+Disallow: /savings
+Disallow: /analytics
+Disallow: /settings
+Disallow: /reset-password
+
+Sitemap: https://spendwise.com/sitemap.xml
