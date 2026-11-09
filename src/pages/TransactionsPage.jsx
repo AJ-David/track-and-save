@@ -22,7 +22,7 @@ import Spinner from '../components/ui/Spinner';
 import TransactionModal from '../components/transactions/TransactionModal';
 import DeleteConfirmModal from '../components/transactions/DeleteConfirmModal';
 import { useTransactions } from '../hooks/useTransactions';
-import { EXPENSE_CATEGORIES, INCOME_CATEGORIES, PAYMENT_METHODS } from '../lib/constants';
+import { EXPENSE_CATEGORIES, INCOME_CATEGORIES, PAYMENT_METHODS, CURRENCIES } from '../lib/constants';
 import { formatCurrency, formatDate } from '../lib/formatters';
 import { useApp } from '../contexts/AppContext';
 import { useToast } from '../contexts/ToastContext';
@@ -211,7 +211,10 @@ export default function TransactionsPage() {
           <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">
             Income ({hasActiveFilters ? 'Filtered' : 'Total'})
           </p>
-          <p className="text-2xl font-black text-emerald-400 mt-1 tracking-tight">
+          <p
+            className="text-2xl font-black text-emerald-400 mt-1 tracking-tight cursor-help"
+            title={CURRENCIES[currency]?.name ? `${CURRENCIES[currency].name} (${currency})` : undefined}
+          >
             +{formatCurrency(currentSummary.income, currency)}
           </p>
         </Card>
@@ -219,7 +222,10 @@ export default function TransactionsPage() {
           <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">
             Expenses ({hasActiveFilters ? 'Filtered' : 'Total'})
           </p>
-          <p className="text-2xl font-black text-red-400 mt-1 tracking-tight">
+          <p
+            className="text-2xl font-black text-red-400 mt-1 tracking-tight cursor-help"
+            title={CURRENCIES[currency]?.name ? `${CURRENCIES[currency].name} (${currency})` : undefined}
+          >
             -{formatCurrency(currentSummary.expenses, currency)}
           </p>
         </Card>
@@ -229,9 +235,10 @@ export default function TransactionsPage() {
           </p>
           <p
             className={cn(
-              'text-2xl font-black mt-1 tracking-tight',
+              'text-2xl font-black mt-1 tracking-tight cursor-help',
               currentSummary.balance >= 0 ? 'text-white' : 'text-red-400'
             )}
+            title={CURRENCIES[currency]?.name ? `${CURRENCIES[currency].name} (${currency})` : undefined}
           >
             {formatCurrency(currentSummary.balance, currency)}
           </p>
@@ -390,7 +397,12 @@ export default function TransactionsPage() {
                     <th className="px-6 py-4">Category</th>
                     <th className="px-6 py-4">Method</th>
                     <th className="px-6 py-4">Date</th>
-                    <th className="px-6 py-4 text-right">Amount</th>
+                    <th
+                      className="px-6 py-4 text-right cursor-help"
+                      title={CURRENCIES[currency]?.name ? `${CURRENCIES[currency].name} (${currency})` : undefined}
+                    >
+                      Amount ({currency})
+                    </th>
                     <th className="px-6 py-4 text-right">Actions</th>
                   </tr>
                 </thead>
@@ -450,9 +462,10 @@ export default function TransactionsPage() {
                         <td className="px-6 py-4 whitespace-nowrap text-right">
                           <span
                             className={cn(
-                              'font-bold text-sm',
+                              'font-bold text-sm cursor-help',
                               isIncome ? 'text-emerald-400' : 'text-zinc-100'
                             )}
+                            title={CURRENCIES[currency]?.name ? `${CURRENCIES[currency].name} (${currency})` : undefined}
                           >
                             {isIncome ? '+' : '-'}
                             {formatCurrency(txn.amount, currency)}

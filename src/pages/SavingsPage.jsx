@@ -23,6 +23,7 @@ import { useSavings } from '../hooks/useSavings';
 import { formatCurrency, formatDate } from '../lib/formatters';
 import { useApp } from '../contexts/AppContext';
 import { useToast } from '../contexts/ToastContext';
+import { CURRENCIES } from '../lib/constants';
 
 export default function SavingsPage() {
   const { currency } = useApp();
@@ -112,7 +113,10 @@ export default function SavingsPage() {
           <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">
             Total Savings Target
           </p>
-          <p className="text-2xl font-black text-white mt-1 tracking-tight">
+          <p
+            className="text-2xl font-black text-white mt-1 tracking-tight cursor-help"
+            title={CURRENCIES[currency]?.name ? `${CURRENCIES[currency].name} (${currency})` : undefined}
+          >
             {formatCurrency(totals.totalTarget, currency)}
           </p>
           <p className="text-xs text-zinc-500 mt-2">
@@ -124,7 +128,10 @@ export default function SavingsPage() {
           <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">
             Total Funded
           </p>
-          <p className="text-2xl font-black text-emerald-400 mt-1 tracking-tight">
+          <p
+            className="text-2xl font-black text-emerald-400 mt-1 tracking-tight cursor-help"
+            title={CURRENCIES[currency]?.name ? `${CURRENCIES[currency].name} (${currency})` : undefined}
+          >
             {formatCurrency(totals.totalSaved, currency)}
           </p>
           <div className="mt-3">
@@ -139,7 +146,10 @@ export default function SavingsPage() {
           <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">
             Remaining to Save
           </p>
-          <p className="text-2xl font-black text-amber-400 mt-1 tracking-tight">
+          <p
+            className="text-2xl font-black text-amber-400 mt-1 tracking-tight cursor-help"
+            title={CURRENCIES[currency]?.name ? `${CURRENCIES[currency].name} (${currency})` : undefined}
+          >
             {formatCurrency(totals.totalRemaining, currency)}
           </p>
           <div className="mt-3 flex items-center gap-1.5 text-xs text-zinc-400">

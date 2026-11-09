@@ -3,6 +3,7 @@ import Card from '../ui/Card';
 import { cn } from '../../lib/utils';
 import { formatCurrency } from '../../lib/formatters';
 import { useApp } from '../../contexts/AppContext';
+import { CURRENCIES } from '../../lib/constants';
 
 const statConfig = [
   {
@@ -57,7 +58,10 @@ export default function StatCards({ summary }) {
           <div className="flex items-start justify-between">
             <div>
               <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">{label}</p>
-              <p className="text-2xl font-black text-white mt-1.5 tracking-tight">
+              <p
+                className="text-2xl font-black text-white mt-1.5 tracking-tight cursor-help"
+                title={CURRENCIES[currency]?.name ? `${CURRENCIES[currency].name} (${CURRENCIES[currency].code})` : undefined}
+              >
                 {formatCurrency(summary[key] || 0, currency)}
               </p>
             </div>

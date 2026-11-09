@@ -229,28 +229,47 @@ export default function Header() {
 
         {/* Right side */}
         <div className="flex items-center gap-3">
-          {/* Quick Currency Selector */}
-          <div className="hidden md:flex items-center gap-1.5 bg-zinc-900 border border-zinc-800 rounded-xl px-2.5 py-1.5 text-xs font-semibold text-zinc-300">
-            <Globe className="w-3.5 h-3.5 text-zinc-500" />
-            <select
-              value={currency}
-              onChange={(e) => setCurrency(e.target.value)}
-              className="bg-transparent border-none outline-none cursor-pointer text-xs font-medium text-zinc-300"
-              title="Change display currency (converts amounts via official rates)"
-            >
-              {Object.values(CURRENCIES).map((c) => (
-                <option key={c.code} value={c.code} className="bg-[#12131a] text-zinc-200">
-                  {c.code} ({c.symbol})
-                </option>
-              ))}
-            </select>
+          {/* Quick Currency Selector with Hover Card */}
+          <div className="relative group/curr hidden md:flex items-center">
+            <div className="flex items-center gap-1.5 bg-zinc-900 border border-zinc-800 hover:border-zinc-700/80 rounded-xl px-2.5 py-1.5 text-xs font-semibold text-zinc-300 transition-colors">
+              <Globe className="w-3.5 h-3.5 text-zinc-500" />
+              <select
+                value={currency}
+                onChange={(e) => setCurrency(e.target.value)}
+                className="bg-transparent border-none outline-none cursor-pointer text-xs font-semibold text-zinc-200 hover:text-white transition-colors"
+                title={`${CURRENCIES[currency]?.name || 'Currency'} (${currency})`}
+                aria-label={`${CURRENCIES[currency]?.name || 'Currency'} (${currency})`}
+              >
+                {Object.values(CURRENCIES).map((c) => (
+                  <option key={c.code} value={c.code} className="bg-[#12131a] text-zinc-200">
+                    {c.code} ({c.symbol}) — {c.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Hover Tooltip displaying full currency name */}
+            <div className="pointer-events-none absolute top-full left-1/2 -translate-x-1/2 mt-2 hidden group-hover/curr:flex flex-col items-center z-50 animate-in fade-in zoom-in-95 duration-150">
+              <div className="w-2 h-2 bg-[#161722] border-t border-l border-zinc-700 rotate-45 -mb-1 z-10" />
+              <div className="bg-[#161722] border border-zinc-700 rounded-xl px-3 py-1.5 shadow-2xl shadow-black/90 text-center whitespace-nowrap">
+                <p className="text-xs font-bold text-white flex items-center gap-1.5 justify-center">
+                  <span className="text-red-400 font-mono font-bold">{CURRENCIES[currency]?.symbol}</span>
+                  <span>{CURRENCIES[currency]?.name || currency}</span>
+                </p>
+                <p className="text-[10px] text-zinc-400 font-medium mt-0.5">
+                  {isConverted
+                    ? `Converted from ${CURRENCIES[baseCurrency]?.name || baseCurrency}`
+                    : 'Active Currency'}
+                </p>
+              </div>
+            </div>
           </div>
 
-          {/* Official Rate Conversion Indicator */}
+          {/* Official Rate Conversion Indicator with Hover Detail */}
           {isConverted && rateBadgeText && (
             <div
-              className="hidden lg:flex items-center gap-1 text-[11px] font-mono font-medium px-2 py-1 rounded-lg bg-red-950/40 text-red-400 border border-red-900/50"
-              title={`Converted using official rates against your base ledger (${baseCurrency})`}
+              className="hidden lg:flex items-center gap-1 text-[11px] font-mono font-medium px-2 py-1 rounded-lg bg-red-950/40 text-red-400 border border-red-900/50 cursor-help"
+              title={`1 ${CURRENCIES[currency]?.name || currency} ≈ ${rateBadgeText.split('≈')[1]?.trim() || ''} ${CURRENCIES[baseCurrency]?.name || baseCurrency} (Official Rate)`}
             >
               <span>{rateBadgeText}</span>
             </div>
