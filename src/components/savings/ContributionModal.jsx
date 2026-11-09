@@ -50,24 +50,24 @@ export default function ContributionModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-in fade-in duration-150">
       <div
-        className="bg-white rounded-2xl shadow-2xl border border-gray-100 w-full max-w-md overflow-hidden"
+        className="bg-[#12131a] rounded-2xl shadow-2xl border border-zinc-800 w-full max-w-md overflow-hidden text-zinc-100"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-800">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-red-950/60 text-red-400 border border-red-800/40 flex items-center justify-center">
               <PiggyBank className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-gray-900">Add Contribution</h3>
-              <p className="text-xs text-gray-500">Deposit towards {goal.name}</p>
+              <h3 className="text-base font-black text-white">Add Contribution</h3>
+              <p className="text-xs text-zinc-400">Deposit towards {goal.name}</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+            className="p-1 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -75,22 +75,22 @@ export default function ContributionModal({
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {error && (
-            <div className="p-3 bg-rose-50 text-rose-700 text-xs rounded-xl border border-rose-200">
+            <div className="p-3 bg-red-950/40 text-red-300 text-xs rounded-xl border border-red-800/60">
               {error}
             </div>
           )}
 
           {/* Goal Overview Mini Card */}
-          <div className="p-3 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-between text-xs">
+          <div className="p-3 bg-zinc-900/80 rounded-xl border border-zinc-800 flex items-center justify-between text-xs">
             <div>
-              <span className="text-gray-400 block">Current Progress</span>
-              <span className="font-bold text-gray-900">
+              <span className="text-zinc-500 block">Current Progress</span>
+              <span className="font-bold text-white">
                 {formatCurrency(goal.current_amount, currency)}
               </span>
             </div>
             <div className="text-right">
-              <span className="text-gray-400 block">Remaining to Target</span>
-              <span className="font-bold text-emerald-600">
+              <span className="text-zinc-500 block">Remaining to Target</span>
+              <span className="font-bold text-emerald-400">
                 {formatCurrency(remaining, currency)}
               </span>
             </div>
@@ -98,11 +98,11 @@ export default function ContributionModal({
 
           {/* Deposit Amount */}
           <div>
-            <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1">
+            <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-1">
               Deposit Amount ({currency})
             </label>
             <div className="relative">
-              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-base">
+              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500 font-bold text-base">
                 {currencySymbol}
               </span>
               <input
@@ -114,14 +114,14 @@ export default function ContributionModal({
                 placeholder="0.00"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-                className="w-full pl-9 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-base font-bold text-gray-900 focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
+                className="w-full pl-9 pr-4 py-2.5 bg-[#161722] border border-zinc-800 rounded-xl text-base font-bold text-white focus:bg-[#1b1c29] focus:ring-2 focus:ring-red-600 outline-none"
               />
             </div>
           </div>
 
           {/* Date */}
           <div>
-            <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1">
+            <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-1">
               Deposit Date
             </label>
             <input
@@ -129,13 +129,13 @@ export default function ContributionModal({
               required
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="w-full px-3.5 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none text-gray-800"
+              className="w-full px-3.5 py-2 bg-[#161722] border border-zinc-800 rounded-xl text-sm focus:bg-[#1b1c29] focus:ring-2 focus:ring-red-600 outline-none text-zinc-200 cursor-pointer"
             />
           </div>
 
           {/* Note */}
           <div>
-            <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1">
+            <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-1">
               Note (Optional)
             </label>
             <input
@@ -143,11 +143,11 @@ export default function ContributionModal({
               placeholder="e.g. End of month allocation"
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              className="w-full px-3.5 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
+              className="w-full px-3.5 py-2 bg-[#161722] border border-zinc-800 rounded-xl text-sm focus:bg-[#1b1c29] focus:ring-2 focus:ring-red-600 outline-none text-zinc-100 placeholder-zinc-500"
             />
           </div>
 
-          <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-100">
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-zinc-800">
             <Button type="button" variant="ghost" onClick={onClose}>
               Cancel
             </Button>

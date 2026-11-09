@@ -96,8 +96,8 @@ export default function SavingsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Savings Goals</h2>
-          <p className="text-sm text-gray-500 mt-1">
+          <h2 className="text-2xl font-black text-white tracking-tight">Savings Goals</h2>
+          <p className="text-sm text-zinc-400 mt-1">
             Build wealth, set target deadlines, and fund your financial milestones.
           </p>
         </div>
@@ -109,41 +109,41 @@ export default function SavingsPage() {
       {/* Overview Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card>
-          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+          <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">
             Total Savings Target
           </p>
-          <p className="text-2xl font-bold text-gray-900 mt-1">
+          <p className="text-2xl font-black text-white mt-1 tracking-tight">
             {formatCurrency(totals.totalTarget, currency)}
           </p>
-          <p className="text-xs text-gray-400 mt-2">
+          <p className="text-xs text-zinc-500 mt-2">
             Target across {totals.totalGoals} active goal{totals.totalGoals === 1 ? '' : 's'}
           </p>
         </Card>
 
         <Card>
-          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+          <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">
             Total Funded
           </p>
-          <p className="text-2xl font-bold text-emerald-600 mt-1">
+          <p className="text-2xl font-black text-emerald-400 mt-1 tracking-tight">
             {formatCurrency(totals.totalSaved, currency)}
           </p>
           <div className="mt-3">
             <ProgressBar value={totals.totalSaved} max={totals.totalTarget} size="sm" />
-            <p className="text-xs text-gray-400 mt-1.5">
+            <p className="text-xs text-zinc-500 mt-1.5">
               {totals.overallPercentage.toFixed(1)}% of total target achieved
             </p>
           </div>
         </Card>
 
         <Card>
-          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+          <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">
             Remaining to Save
           </p>
-          <p className="text-2xl font-bold text-blue-600 mt-1">
+          <p className="text-2xl font-black text-amber-400 mt-1 tracking-tight">
             {formatCurrency(totals.totalRemaining, currency)}
           </p>
-          <div className="mt-3 flex items-center gap-1.5 text-xs text-gray-500">
-            <TrendingUp className="w-3.5 h-3.5 text-blue-500" />
+          <div className="mt-3 flex items-center gap-1.5 text-xs text-zinc-400">
+            <TrendingUp className="w-3.5 h-3.5 text-amber-400" />
             <span>
               {totals.completedCount} completed · {totals.activeCount} in progress
             </span>
@@ -213,31 +213,31 @@ export default function SavingsPage() {
                   </div>
 
                   {/* Goal Name & Deadline */}
-                  <h3 className="font-bold text-gray-900 text-lg mb-1">{goal.name}</h3>
-                  <div className="flex items-center gap-2 text-xs text-gray-400 mb-4">
+                  <h3 className="font-bold text-white text-lg mb-1">{goal.name}</h3>
+                  <div className="flex items-center gap-2 text-xs text-zinc-500 mb-4">
                     <Calendar className="w-3.5 h-3.5" />
                     <span>Target: {formatDate(goal.deadline, 'medium')}</span>
                     {!isCompleted && diffDays > 0 && (
-                      <span className="text-gray-300">· {diffDays} days left</span>
+                      <span className="text-zinc-600">· {diffDays} days left</span>
                     )}
                   </div>
 
                   {/* Progress Bar & Amounts */}
                   <div className="space-y-2 mb-4">
                     <div className="flex justify-between items-baseline">
-                      <span className="text-base font-bold text-gray-900">
+                      <span className="text-base font-bold text-white">
                         {formatCurrency(current, currency)}
                       </span>
-                      <span className="text-xs text-gray-400">
+                      <span className="text-xs text-zinc-500">
                         Goal: {formatCurrency(target, currency)}
                       </span>
                     </div>
 
                     <ProgressBar value={current} max={target} size="md" />
 
-                    <div className="flex justify-between text-xs text-gray-500 pt-1">
+                    <div className="flex justify-between text-xs text-zinc-400 pt-1">
                       <span>{percentage.toFixed(1)}% achieved</span>
-                      <span className={isCompleted ? 'text-emerald-600 font-semibold' : ''}>
+                      <span className={isCompleted ? 'text-emerald-400 font-bold' : ''}>
                         {isCompleted
                           ? 'Goal Completed! 🎉'
                           : `${formatCurrency(remaining, currency)} remaining`}
@@ -247,7 +247,7 @@ export default function SavingsPage() {
                 </div>
 
                 {/* Actions Footer */}
-                <div className="pt-4 border-t border-gray-100 flex items-center gap-2">
+                <div className="pt-4 border-t border-zinc-800 flex items-center gap-2">
                   <Button
                     variant="outline"
                     size="sm"
@@ -258,14 +258,14 @@ export default function SavingsPage() {
                   </Button>
                   <button
                     onClick={() => handleOpenEditModal(goal)}
-                    className="p-2 text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-xl transition-colors"
+                    className="p-2 text-zinc-400 hover:text-red-400 hover:bg-zinc-800 rounded-xl transition-colors"
                     title="Edit Goal"
                   >
                     <Pencil className="w-3.5 h-3.5" />
                   </button>
                   <button
                     onClick={() => setDeletingGoal(goal)}
-                    className="p-2 text-gray-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-colors"
+                    className="p-2 text-zinc-400 hover:text-red-400 hover:bg-zinc-800 rounded-xl transition-colors"
                     title="Delete Goal"
                   >
                     <Trash2 className="w-3.5 h-3.5" />

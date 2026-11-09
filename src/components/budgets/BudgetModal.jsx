@@ -64,18 +64,18 @@ export default function BudgetModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-in fade-in duration-150">
       <div
-        className="bg-white rounded-2xl shadow-2xl border border-gray-100 w-full max-w-md overflow-hidden"
+        className="bg-[#12131a] rounded-2xl shadow-2xl border border-zinc-800 w-full max-w-md overflow-hidden text-zinc-100"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-          <h3 className="text-lg font-bold text-gray-900">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-800">
+          <h3 className="text-lg font-black text-white">
             {budget ? 'Edit Budget' : 'Set Category Budget'}
           </h3>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+            className="p-1 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -83,24 +83,24 @@ export default function BudgetModal({
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {error && (
-            <div className="p-3 bg-rose-50 text-rose-700 text-xs rounded-xl border border-rose-200">
+            <div className="p-3 bg-red-950/40 text-red-300 text-xs rounded-xl border border-red-800/60">
               {error}
             </div>
           )}
 
           {/* Category */}
           <div>
-            <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1">
+            <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-1">
               Category
             </label>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
               disabled={Boolean(budget)}
-              className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none text-gray-800 disabled:opacity-60"
+              className="w-full px-3 py-2 bg-[#161722] border border-zinc-800 rounded-xl text-sm focus:bg-[#1b1c29] focus:ring-2 focus:ring-red-600 outline-none text-zinc-200 disabled:opacity-60 cursor-pointer"
             >
               {EXPENSE_CATEGORIES.map((c) => (
-                <option key={c.id} value={c.id}>
+                <option key={c.id} value={c.id} className="bg-[#12131a] text-zinc-200">
                   {c.label}
                 </option>
               ))}
@@ -109,11 +109,11 @@ export default function BudgetModal({
 
           {/* Spending Limit */}
           <div>
-            <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1">
+            <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-1">
               Monthly Limit ({currency})
             </label>
             <div className="relative">
-              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-base">
+              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500 font-bold text-base">
                 {currencySymbol}
               </span>
               <input
@@ -124,14 +124,14 @@ export default function BudgetModal({
                 placeholder="50,000"
                 value={limitAmount}
                 onChange={(e) => setLimitAmount(e.target.value)}
-                className="w-full pl-9 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-base font-bold text-gray-900 focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
+                className="w-full pl-9 pr-4 py-2.5 bg-[#161722] border border-zinc-800 rounded-xl text-base font-bold text-white focus:bg-[#1b1c29] focus:ring-2 focus:ring-red-600 outline-none"
               />
             </div>
           </div>
 
           {/* Month */}
           <div>
-            <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1">
+            <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-1">
               Month Period
             </label>
             <input
@@ -139,11 +139,11 @@ export default function BudgetModal({
               required
               value={month}
               onChange={(e) => setMonth(e.target.value)}
-              className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none text-gray-800"
+              className="w-full px-3 py-2 bg-[#161722] border border-zinc-800 rounded-xl text-sm focus:bg-[#1b1c29] focus:ring-2 focus:ring-red-600 outline-none text-zinc-200 cursor-pointer"
             />
           </div>
 
-          <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-100">
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-zinc-800">
             <Button type="button" variant="ghost" onClick={onClose}>
               Cancel
             </Button>

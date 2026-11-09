@@ -7,7 +7,7 @@ import Header from './Header';
  */
 export default function AppLayout() {
   return (
-    <div className="flex h-screen bg-gray-50 overflow-hidden">
+    <div className="flex h-screen bg-[#090a0f] text-zinc-100 overflow-hidden">
       <Sidebar />
       <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
         <Header />

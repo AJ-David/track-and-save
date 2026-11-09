@@ -81,21 +81,21 @@ export default function BudgetsPage() {
       {/* Header with Month Selector */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Monthly Budgets</h2>
-          <p className="text-sm text-gray-500 mt-1">
+          <h2 className="text-2xl font-black text-white tracking-tight">Monthly Budgets</h2>
+          <p className="text-sm text-zinc-400 mt-1">
             Set category limits, monitor real-time spending, and prevent budget overflows.
           </p>
         </div>
 
         <div className="flex items-center gap-3">
           {/* Month Selector */}
-          <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-3 py-2 shadow-sm">
-            <Calendar className="w-4 h-4 text-gray-400" />
+          <div className="flex items-center gap-2 bg-[#12131a] border border-zinc-800 rounded-xl px-3 py-2 shadow-md">
+            <Calendar className="w-4 h-4 text-zinc-500" />
             <input
               type="month"
               value={selectedMonth}
               onChange={(e) => setSelectedMonth(e.target.value)}
-              className="text-sm text-gray-700 bg-transparent border-none outline-none cursor-pointer font-medium"
+              className="text-sm text-zinc-200 bg-transparent border-none outline-none cursor-pointer font-semibold"
             />
           </div>
 
@@ -108,41 +108,41 @@ export default function BudgetsPage() {
       {/* Top Overview Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card>
-          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+          <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">
             Total Budget
           </p>
-          <p className="text-2xl font-bold text-gray-900 mt-1">
+          <p className="text-2xl font-black text-white mt-1 tracking-tight">
             {formatCurrency(totals.totalBudgeted, currency)}
           </p>
           <div className="mt-3">
             <ProgressBar value={totals.totalSpent} max={totals.totalBudgeted} size="sm" />
-            <p className="text-xs text-gray-400 mt-1.5">
+            <p className="text-xs text-zinc-500 mt-1.5">
               {totals.overallPercentage.toFixed(1)}% of budget used
             </p>
           </div>
         </Card>
 
         <Card>
-          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+          <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">
             Total Spent So Far
           </p>
-          <p className="text-2xl font-bold text-rose-600 mt-1">
+          <p className="text-2xl font-black text-red-400 mt-1 tracking-tight">
             {formatCurrency(totals.totalSpent, currency)}
           </p>
-          <div className="mt-3 flex items-center gap-1.5 text-xs text-gray-500">
-            <TrendingUp className="w-3.5 h-3.5 text-rose-500" />
+          <div className="mt-3 flex items-center gap-1.5 text-xs text-zinc-400">
+            <TrendingUp className="w-3.5 h-3.5 text-red-400" />
             <span>Across {budgetStats.length} active categories</span>
           </div>
         </Card>
 
         <Card>
-          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+          <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">
             Remaining Budget
           </p>
-          <p className="text-2xl font-bold text-emerald-600 mt-1">
+          <p className="text-2xl font-black text-emerald-400 mt-1 tracking-tight">
             {formatCurrency(totals.totalRemaining, currency)}
           </p>
-          <div className="mt-3 flex items-center gap-1.5 text-xs text-emerald-600 font-medium">
+          <div className="mt-3 flex items-center gap-1.5 text-xs text-emerald-400 font-semibold">
             <CheckCircle2 className="w-3.5 h-3.5" />
             <span>Available to spend safely</span>
           </div>
@@ -184,7 +184,7 @@ export default function BudgetsPage() {
                       className="w-3.5 h-3.5 rounded-full flex-shrink-0"
                       style={{ backgroundColor: item.categoryColor }}
                     />
-                    <h3 className="font-semibold text-gray-900 text-base">
+                    <h3 className="font-bold text-white text-base">
                       {item.categoryLabel}
                     </h3>
                   </div>
@@ -205,10 +205,10 @@ export default function BudgetsPage() {
                 {/* Progress Details */}
                 <div className="space-y-2 mt-4">
                   <div className="flex justify-between items-baseline">
-                    <span className="text-base font-bold text-gray-900">
+                    <span className="text-base font-bold text-white">
                       {formatCurrency(item.spent, currency)}
                     </span>
-                    <span className="text-xs text-gray-400">
+                    <span className="text-xs text-zinc-500">
                       Limit: {formatCurrency(item.limit, currency)}
                     </span>
                   </div>
@@ -219,9 +219,9 @@ export default function BudgetsPage() {
                     size="md"
                   />
 
-                  <div className="flex justify-between items-center text-xs text-gray-500 pt-1">
+                  <div className="flex justify-between items-center text-xs text-zinc-400 pt-1">
                     <span>{item.percentage.toFixed(0)}% consumed</span>
-                    <span className={item.isExceeded ? 'text-rose-600 font-semibold' : ''}>
+                    <span className={item.isExceeded ? 'text-red-400 font-bold' : ''}>
                       {item.isExceeded
                         ? `Over by ${formatCurrency(item.spent - item.limit, currency)}`
                         : `${formatCurrency(item.remaining, currency)} left`}
@@ -231,17 +231,17 @@ export default function BudgetsPage() {
               </div>
 
               {/* Actions Footer */}
-              <div className="pt-4 mt-4 border-t border-gray-100 flex items-center justify-end gap-2">
+              <div className="pt-4 mt-4 border-t border-zinc-800 flex items-center justify-end gap-2">
                 <button
                   onClick={() => handleOpenEditModal(item)}
-                  className="p-1.5 text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors text-xs font-medium inline-flex items-center gap-1"
+                  className="p-1.5 text-zinc-400 hover:text-red-400 hover:bg-zinc-800 rounded-lg transition-colors text-xs font-semibold inline-flex items-center gap-1"
                 >
                   <Pencil className="w-3.5 h-3.5" />
                   Edit
                 </button>
                 <button
                   onClick={() => setDeletingBudget(item)}
-                  className="p-1.5 text-gray-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors text-xs font-medium inline-flex items-center gap-1"
+                  className="p-1.5 text-zinc-400 hover:text-red-400 hover:bg-zinc-800 rounded-lg transition-colors text-xs font-semibold inline-flex items-center gap-1"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                   Delete

@@ -7,7 +7,7 @@ export default function Card({ children, className, padding = true, ...props }) 
   return (
     <div
       className={cn(
-        'bg-white rounded-2xl border border-gray-100 shadow-sm',
+        'bg-[#12131a] rounded-2xl border border-zinc-800/80 shadow-xl shadow-black/40 text-zinc-100',
         padding && 'p-6',
         className
       )}
@@ -28,7 +28,7 @@ export function CardHeader({ children, className }) {
 
 export function CardTitle({ children, className }) {
   return (
-    <h3 className={cn('text-sm font-semibold text-gray-500 uppercase tracking-wider', className)}>
+    <h3 className={cn('text-xs font-bold text-zinc-400 uppercase tracking-wider', className)}>
       {children}
     </h3>
   );

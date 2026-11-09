@@ -37,8 +37,8 @@ function CustomTooltip({ active, payload, label, currency }) {
   if (!active || !payload?.length) return null;
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-3.5 text-xs">
-      <p className="font-bold text-gray-900 mb-2">{label}</p>
+    <div className="bg-[#151620] rounded-xl shadow-2xl border border-zinc-700/80 p-3.5 text-xs">
+      <p className="font-bold text-white mb-2">{label}</p>
       {payload.map((entry) => (
         <div key={entry.name} className="flex items-center justify-between gap-4 mb-1">
           <div className="flex items-center gap-1.5">
@@ -46,9 +46,9 @@ function CustomTooltip({ active, payload, label, currency }) {
               className="w-2.5 h-2.5 rounded-full"
               style={{ backgroundColor: entry.color }}
             />
-            <span className="capitalize text-gray-500 font-medium">{entry.name}:</span>
+            <span className="capitalize text-zinc-400 font-medium">{entry.name}:</span>
           </div>
-          <span className="font-bold text-gray-900">
+          <span className="font-bold text-zinc-100">
             {formatCurrency(entry.value, currency)}
           </span>
         </div>
@@ -244,26 +244,26 @@ export default function AnalyticsPage() {
       {/* Header + Date Range & Export Actions */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Analytics &amp; Financial Reports</h2>
-          <p className="text-sm text-gray-500 mt-1">
+          <h2 className="text-2xl font-black text-white tracking-tight">Analytics &amp; Financial Reports</h2>
+          <p className="text-sm text-zinc-400 mt-1">
             Deep dive into your cashflow trajectory, category spending, and savings velocity.
           </p>
         </div>
 
         <div className="flex items-center gap-2.5">
           {/* Date Range Selector */}
-          <div className="flex items-center gap-1.5 bg-white border border-gray-200 rounded-xl px-3 py-2 shadow-sm">
-            <Calendar className="w-4 h-4 text-emerald-600" />
+          <div className="flex items-center gap-1.5 bg-[#12131a] border border-zinc-800 rounded-xl px-3 py-2 shadow-md">
+            <Calendar className="w-4 h-4 text-red-500" />
             <select
               value={dateRange}
               onChange={(e) => setDateRange(e.target.value)}
-              className="text-sm font-semibold text-gray-700 bg-transparent border-none outline-none cursor-pointer"
+              className="text-sm font-semibold text-zinc-200 bg-transparent border-none outline-none cursor-pointer"
             >
-              <option value="30-days">Last 30 Days (Weekly)</option>
-              <option value="3-months">Last 3 Months</option>
-              <option value="6-months">Last 6 Months</option>
-              <option value="this-year">This Year</option>
-              <option value="all">All Time</option>
+              <option value="30-days" className="bg-[#12131a] text-zinc-200">Last 30 Days (Weekly)</option>
+              <option value="3-months" className="bg-[#12131a] text-zinc-200">Last 3 Months</option>
+              <option value="6-months" className="bg-[#12131a] text-zinc-200">Last 6 Months</option>
+              <option value="this-year" className="bg-[#12131a] text-zinc-200">This Year</option>
+              <option value="all" className="bg-[#12131a] text-zinc-200">All Time</option>
             </select>
           </div>
 
@@ -273,7 +273,7 @@ export default function AnalyticsPage() {
             icon={exportedSuccess ? Check : Download}
             loading={exporting}
             onClick={handleExportCSV}
-            className={exportedSuccess ? 'text-emerald-600 border-emerald-300 bg-emerald-50' : ''}
+            className={exportedSuccess ? 'text-emerald-400 border-emerald-800 bg-emerald-950/60' : ''}
           >
             {exportedSuccess ? 'Exported!' : 'Export CSV'}
           </Button>
@@ -283,10 +283,10 @@ export default function AnalyticsPage() {
       {loading ? (
         <div className="py-24 text-center">
           <Spinner size="lg" />
-          <p className="text-sm text-gray-400 mt-3">Compiling financial analytics...</p>
+          <p className="text-sm text-zinc-500 mt-3">Compiling financial analytics...</p>
         </div>
       ) : error ? (
-        <Card className="text-center p-8 text-rose-600 text-sm">
+        <Card className="text-center p-8 text-red-400 text-sm">
           {error}
         </Card>
       ) : filteredTransactions.length === 0 ? (
@@ -304,18 +304,18 @@ export default function AnalyticsPage() {
             <Card>
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                  <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">
                     Savings Rate
                   </p>
-                  <p className="text-2xl font-bold text-emerald-600 mt-1">
+                  <p className="text-2xl font-black text-emerald-400 mt-1 tracking-tight">
                     {metrics.savingsRate.toFixed(1)}%
                   </p>
                 </div>
-                <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
+                <div className="w-10 h-10 rounded-xl bg-emerald-950/60 border border-emerald-800/40 flex items-center justify-center text-emerald-400">
                   <TrendingUp className="w-5 h-5" />
                 </div>
               </div>
-              <p className="text-xs text-gray-400 mt-2">
+              <p className="text-xs text-zinc-500 mt-2">
                 {periodLabelMap[dateRange]} retention rate
               </p>
             </Card>
@@ -323,18 +323,18 @@ export default function AnalyticsPage() {
             <Card>
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                  <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">
                     Total Period Outflow
                   </p>
-                  <p className="text-2xl font-bold text-rose-600 mt-1">
+                  <p className="text-2xl font-black text-red-400 mt-1 tracking-tight">
                     {formatCurrency(metrics.expenses, currency)}
                   </p>
                 </div>
-                <div className="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600">
+                <div className="w-10 h-10 rounded-xl bg-red-950/60 border border-red-800/40 flex items-center justify-center text-red-400">
                   <TrendingDown className="w-5 h-5" />
                 </div>
               </div>
-              <p className="text-xs text-gray-400 mt-2">
+              <p className="text-xs text-zinc-500 mt-2">
                 Across {filteredTransactions.filter((t) => t.type === 'expense').length} expense entries
               </p>
             </Card>
@@ -342,35 +342,35 @@ export default function AnalyticsPage() {
             <Card>
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                  <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">
                     Net Cash Balance
                   </p>
-                  <p className="text-2xl font-bold text-gray-900 mt-1">
+                  <p className="text-2xl font-black text-white mt-1 tracking-tight">
                     {formatCurrency(metrics.net, currency)}
                   </p>
                 </div>
-                <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
+                <div className="w-10 h-10 rounded-xl bg-zinc-800/80 border border-zinc-700/50 flex items-center justify-center text-zinc-100">
                   <DollarSign className="w-5 h-5" />
                 </div>
               </div>
-              <p className="text-xs text-gray-400 mt-2">Net cash inflow margin</p>
+              <p className="text-xs text-zinc-500 mt-2">Net cash inflow margin</p>
             </Card>
 
             <Card>
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                  <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">
                     Top Spend Category
                   </p>
-                  <p className="text-lg font-bold text-gray-900 mt-1 truncate max-w-[140px]">
+                  <p className="text-lg font-black text-white mt-1 truncate max-w-[140px]">
                     {metrics.topCategory}
                   </p>
                 </div>
-                <div className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600">
+                <div className="w-10 h-10 rounded-xl bg-amber-950/60 border border-amber-800/40 flex items-center justify-center text-amber-400">
                   <PieIcon className="w-5 h-5" />
                 </div>
               </div>
-              <p className="text-xs text-gray-400 mt-2">Highest cumulative outlay</p>
+              <p className="text-xs text-zinc-500 mt-2">Highest cumulative outlay</p>
             </Card>
           </div>
 
@@ -379,7 +379,7 @@ export default function AnalyticsPage() {
             <CardHeader>
               <div>
                 <CardTitle>Cash Flow Trajectory (Income vs Expenses)</CardTitle>
-                <p className="text-xs text-gray-400 mt-0.5">
+                <p className="text-xs text-zinc-500 mt-0.5">
                   Showing {periodLabelMap[dateRange]} comparison
                 </p>
               </div>
@@ -387,18 +387,18 @@ export default function AnalyticsPage() {
             <div className="h-[340px] -mx-2">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={monthlyTrendsData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
-                  <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#94a3b8' }} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#27272a" vertical={false} />
+                  <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#71717a' }} />
                   <YAxis
                     axisLine={false}
                     tickLine={false}
-                    tick={{ fontSize: 12, fill: '#94a3b8' }}
+                    tick={{ fontSize: 12, fill: '#71717a' }}
                     tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`}
                   />
                   <Tooltip content={<CustomTooltip currency={currency} />} />
                   <Legend verticalAlign="top" align="right" height={36} iconType="circle" />
                   <Bar dataKey="income" name="Income" fill="#10b981" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="expenses" name="Expenses" fill="#f43f5e" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="expenses" name="Expenses" fill="#dc2626" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -411,7 +411,7 @@ export default function AnalyticsPage() {
               <CardHeader>
                 <div>
                   <CardTitle>Net Cash Margin (Monthly Savings)</CardTitle>
-                  <p className="text-xs text-gray-400 mt-0.5">
+                  <p className="text-xs text-zinc-500 mt-0.5">
                     Retained cashflow margin across {periodLabelMap[dateRange]}
                   </p>
                 </div>
@@ -421,16 +421,16 @@ export default function AnalyticsPage() {
                   <AreaChart data={monthlyTrendsData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
                     <defs>
                       <linearGradient id="netSavingsGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.25} />
-                        <stop offset="100%" stopColor="#3b82f6" stopOpacity={0} />
+                        <stop offset="0%" stopColor="#dc2626" stopOpacity={0.25} />
+                        <stop offset="100%" stopColor="#dc2626" stopOpacity={0} />
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
-                    <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#94a3b8' }} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#27272a" vertical={false} />
+                    <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#71717a' }} />
                     <YAxis
                       axisLine={false}
                       tickLine={false}
-                      tick={{ fontSize: 12, fill: '#94a3b8' }}
+                      tick={{ fontSize: 12, fill: '#71717a' }}
                       tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`}
                     />
                     <Tooltip content={<CustomTooltip currency={currency} />} />
@@ -438,7 +438,7 @@ export default function AnalyticsPage() {
                       type="monotone"
                       dataKey="net"
                       name="Net Savings"
-                      stroke="#3b82f6"
+                      stroke="#dc2626"
                       strokeWidth={2.5}
                       fill="url(#netSavingsGradient)"
                     />
@@ -452,14 +452,14 @@ export default function AnalyticsPage() {
               <CardHeader>
                 <div>
                   <CardTitle>Expenses by Category</CardTitle>
-                  <p className="text-xs text-gray-400 mt-0.5">
+                  <p className="text-xs text-zinc-500 mt-0.5">
                     Distribution for {periodLabelMap[dateRange]}
                   </p>
                 </div>
               </CardHeader>
               <div className="space-y-3.5 max-h-[300px] overflow-y-auto pr-1">
                 {categoryStats.length === 0 ? (
-                  <p className="text-xs text-gray-400 py-8 text-center">No expense records found.</p>
+                  <p className="text-xs text-zinc-500 py-8 text-center">No expense records found.</p>
                 ) : (
                   categoryStats.map((item) => (
                     <div key={item.id} className="space-y-1">
@@ -469,18 +469,18 @@ export default function AnalyticsPage() {
                             className="w-2.5 h-2.5 rounded-full flex-shrink-0"
                             style={{ backgroundColor: item.color }}
                           />
-                          <span className="font-semibold text-gray-800">{item.name}</span>
+                          <span className="font-semibold text-zinc-200">{item.name}</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <span className="font-bold text-gray-900">
+                          <span className="font-bold text-zinc-100">
                             {formatCurrency(item.amount, currency)}
                           </span>
-                          <span className="text-gray-400 w-12 text-right">
+                          <span className="text-zinc-500 w-12 text-right">
                             {item.percentage.toFixed(1)}%
                           </span>
                         </div>
                       </div>
-                      <div className="w-full bg-gray-100 rounded-full h-1.5 overflow-hidden">
+                      <div className="w-full bg-zinc-800 rounded-full h-1.5 overflow-hidden">
                         <div
                           className="h-full rounded-full transition-all duration-500"
                           style={{

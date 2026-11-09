@@ -126,28 +126,28 @@ export default function DashboardPage() {
       {/* Welcome Banner + Quick Actions */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">
-            Welcome back, <span className="text-emerald-600">{firstName}</span> 👋
+          <h2 className="text-2xl font-black text-white tracking-tight">
+            Welcome back, <span className="text-red-500">{firstName}</span> 👋
           </h2>
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-zinc-400 mt-1">
             Here&apos;s your financial pulse and monthly overview.
           </p>
         </div>
 
         <div className="flex items-center gap-3">
           {/* Date Filter */}
-          <div className="flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-3 py-2 shadow-sm">
-            <Calendar className="w-4 h-4 text-emerald-600" />
+          <div className="flex items-center gap-2 bg-[#12131a] border border-zinc-800 rounded-xl px-3 py-2 shadow-md">
+            <Calendar className="w-4 h-4 text-red-500" />
             <select
               value={dateRange}
               onChange={(e) => setDateRange(e.target.value)}
-              className="text-sm font-semibold text-gray-700 bg-transparent border-none outline-none cursor-pointer"
+              className="text-sm font-semibold text-zinc-200 bg-transparent border-none outline-none cursor-pointer"
             >
-              <option value="this-week">This Week</option>
-              <option value="this-month">This Month</option>
-              <option value="last-month">Last Month</option>
-              <option value="last-3-months">Last 3 Months</option>
-              <option value="this-year">This Year</option>
+              <option value="this-week" className="bg-[#12131a] text-zinc-200">This Week</option>
+              <option value="this-month" className="bg-[#12131a] text-zinc-200">This Month</option>
+              <option value="last-month" className="bg-[#12131a] text-zinc-200">Last Month</option>
+              <option value="last-3-months" className="bg-[#12131a] text-zinc-200">Last 3 Months</option>
+              <option value="this-year" className="bg-[#12131a] text-zinc-200">This Year</option>
             </select>
           </div>
 

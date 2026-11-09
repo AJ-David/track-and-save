@@ -1,11 +1,11 @@
 import { cn } from '../../lib/utils';
 
 const variants = {
-  primary: 'bg-emerald-600 text-white hover:bg-emerald-700 focus:ring-emerald-500',
-  secondary: 'bg-gray-100 text-gray-700 hover:bg-gray-200 focus:ring-gray-400',
-  danger: 'bg-red-50 text-red-600 hover:bg-red-100 focus:ring-red-400',
-  ghost: 'bg-transparent text-gray-600 hover:bg-gray-100 focus:ring-gray-400',
-  outline: 'border border-gray-200 text-gray-700 hover:bg-gray-50 focus:ring-gray-400',
+  primary: 'bg-red-600 text-white hover:bg-red-700 active:bg-red-800 focus:ring-red-500 shadow-lg shadow-red-950/60 font-semibold',
+  secondary: 'bg-zinc-800/80 text-zinc-200 hover:bg-zinc-700 focus:ring-zinc-600 border border-zinc-700/50',
+  danger: 'bg-red-950/40 text-red-400 hover:bg-red-900/50 focus:ring-red-500 border border-red-800/40',
+  ghost: 'bg-transparent text-zinc-400 hover:text-white hover:bg-zinc-800/60 focus:ring-zinc-600',
+  outline: 'border border-zinc-700/80 text-zinc-200 hover:bg-zinc-800/60 focus:ring-zinc-600',
 };
 
 const sizes = {

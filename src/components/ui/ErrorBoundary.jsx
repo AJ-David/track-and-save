@@ -32,22 +32,22 @@ export default class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
-          <div className="max-w-md w-full bg-white rounded-2xl shadow-xl border border-gray-100 p-8 text-center">
-            <div className="w-16 h-16 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center mx-auto mb-5 shadow-sm">
+        <div className="min-h-screen bg-[#07070a] flex items-center justify-center p-6 text-zinc-100">
+          <div className="max-w-md w-full bg-[#12131a] rounded-2xl shadow-2xl border border-zinc-800 p-8 text-center">
+            <div className="w-16 h-16 rounded-2xl bg-red-950/60 text-red-400 border border-red-800/40 flex items-center justify-center mx-auto mb-5 shadow-md shadow-red-950/50">
               <AlertTriangle className="w-8 h-8" />
             </div>
 
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">
+            <h1 className="text-2xl font-black text-white mb-2">
               Something went wrong
             </h1>
-            <p className="text-sm text-gray-500 mb-6 leading-relaxed">
-              An unexpected error occurred while rendering this page. Don't worry, your financial data remains safe.
+            <p className="text-sm text-zinc-400 mb-6 leading-relaxed">
+              An unexpected error occurred while rendering this page. Don't worry, your financial records remain safe.
             </p>
 
             {this.state.error && (
-              <div className="bg-gray-50 border border-gray-200 rounded-xl p-3 mb-6 text-left overflow-auto max-h-36">
-                <p className="text-xs font-mono text-rose-600 font-semibold break-words">
+              <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-3 mb-6 text-left overflow-auto max-h-36">
+                <p className="text-xs font-mono text-red-400 font-semibold break-words">
                   {this.state.error.toString()}
                 </p>
               </div>

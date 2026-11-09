@@ -195,8 +195,8 @@ export default function TransactionsPage() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Transactions</h2>
-          <p className="text-sm text-gray-500 mt-1">
+          <h2 className="text-2xl font-black text-white tracking-tight">Transactions</h2>
+          <p className="text-sm text-zinc-400 mt-1">
             Browse, search, and manage your income and expenses in real-time.
           </p>
         </div>
@@ -208,29 +208,29 @@ export default function TransactionsPage() {
       {/* Summary KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <Card>
-          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+          <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">
             Income ({hasActiveFilters ? 'Filtered' : 'Total'})
           </p>
-          <p className="text-2xl font-bold text-emerald-600 mt-1">
+          <p className="text-2xl font-black text-emerald-400 mt-1 tracking-tight">
             +{formatCurrency(currentSummary.income, currency)}
           </p>
         </Card>
         <Card>
-          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+          <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">
             Expenses ({hasActiveFilters ? 'Filtered' : 'Total'})
           </p>
-          <p className="text-2xl font-bold text-rose-600 mt-1">
+          <p className="text-2xl font-black text-red-400 mt-1 tracking-tight">
             -{formatCurrency(currentSummary.expenses, currency)}
           </p>
         </Card>
         <Card>
-          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+          <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">
             Net Cash Flow
           </p>
           <p
             className={cn(
-              'text-2xl font-bold mt-1',
-              currentSummary.balance >= 0 ? 'text-gray-900' : 'text-rose-600'
+              'text-2xl font-black mt-1 tracking-tight',
+              currentSummary.balance >= 0 ? 'text-white' : 'text-red-400'
             )}
           >
             {formatCurrency(currentSummary.balance, currency)}
@@ -243,7 +243,7 @@ export default function TransactionsPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
           {/* Live Search */}
           <div className="relative lg:col-span-1">
-            <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-zinc-500 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Search description or amount..."
@@ -252,7 +252,7 @@ export default function TransactionsPage() {
                 setSearchTerm(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full pl-9 pr-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all text-gray-900"
+              className="w-full pl-9 pr-3 py-2 bg-[#161722] border border-zinc-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-600 focus:bg-[#1b1c29] transition-all text-zinc-100 placeholder-zinc-500"
             />
           </div>
 
@@ -265,11 +265,11 @@ export default function TransactionsPage() {
                 setCategoryFilter('all');
                 setCurrentPage(1);
               }}
-              className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white text-gray-700 transition-all font-medium"
+              className="w-full px-3 py-2 bg-[#161722] border border-zinc-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-600 focus:bg-[#1b1c29] text-zinc-200 transition-all font-semibold cursor-pointer"
             >
-              <option value="all">All Types</option>
-              <option value="income">Income (+)</option>
-              <option value="expense">Expense (-)</option>
+              <option value="all" className="bg-[#12131a] text-zinc-200">All Types</option>
+              <option value="income" className="bg-[#12131a] text-zinc-200">Income (+)</option>
+              <option value="expense" className="bg-[#12131a] text-zinc-200">Expense (-)</option>
             </select>
           </div>
 
@@ -281,11 +281,11 @@ export default function TransactionsPage() {
                 setCategoryFilter(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white text-gray-700 transition-all"
+              className="w-full px-3 py-2 bg-[#161722] border border-zinc-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-600 focus:bg-[#1b1c29] text-zinc-200 transition-all cursor-pointer"
             >
-              <option value="all">All Categories</option>
+              <option value="all" className="bg-[#12131a] text-zinc-200">All Categories</option>
               {allCategories.map((c) => (
-                <option key={c.id} value={c.id}>
+                <option key={c.id} value={c.id} className="bg-[#12131a] text-zinc-200">
                   {c.label}
                 </option>
               ))}
@@ -300,11 +300,11 @@ export default function TransactionsPage() {
                 setPaymentMethodFilter(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white text-gray-700 transition-all"
+              className="w-full px-3 py-2 bg-[#161722] border border-zinc-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-600 focus:bg-[#1b1c29] text-zinc-200 transition-all cursor-pointer"
             >
-              <option value="all">All Methods</option>
+              <option value="all" className="bg-[#12131a] text-zinc-200">All Methods</option>
               {PAYMENT_METHODS.map((p) => (
-                <option key={p.id} value={p.id}>
+                <option key={p.id} value={p.id} className="bg-[#12131a] text-zinc-200">
                   {p.label}
                 </option>
               ))}
@@ -319,27 +319,27 @@ export default function TransactionsPage() {
                 setSortBy(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white text-gray-700 transition-all font-medium"
+              className="w-full px-3 py-2 bg-[#161722] border border-zinc-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-600 focus:bg-[#1b1c29] text-zinc-200 transition-all font-semibold cursor-pointer"
             >
-              <option value="date-desc">Newest First</option>
-              <option value="date-asc">Oldest First</option>
-              <option value="amount-desc">Highest Amount</option>
-              <option value="amount-asc">Lowest Amount</option>
+              <option value="date-desc" className="bg-[#12131a] text-zinc-200">Newest First</option>
+              <option value="date-asc" className="bg-[#12131a] text-zinc-200">Oldest First</option>
+              <option value="amount-desc" className="bg-[#12131a] text-zinc-200">Highest Amount</option>
+              <option value="amount-asc" className="bg-[#12131a] text-zinc-200">Lowest Amount</option>
             </select>
           </div>
         </div>
 
         {/* Filter Indicator Bar */}
-        <div className="flex items-center gap-2 pt-2 border-t border-gray-100 overflow-x-auto text-xs text-gray-500">
-          <Filter className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
+        <div className="flex items-center gap-2 pt-2 border-t border-zinc-800 overflow-x-auto text-xs text-zinc-400">
+          <Filter className="w-3.5 h-3.5 text-zinc-500 flex-shrink-0" />
           <span className="font-medium flex-shrink-0">Showing:</span>
-          <span className="bg-emerald-50 text-emerald-700 px-2.5 py-0.5 rounded-full font-bold">
+          <span className="bg-red-950/60 text-red-400 border border-red-800/40 px-2.5 py-0.5 rounded-full font-bold">
             {filteredTransactions.length} of {rawTransactions.length} record{rawTransactions.length === 1 ? '' : 's'}
           </span>
           {hasActiveFilters && (
             <button
               onClick={handleResetFilters}
-              className="inline-flex items-center gap-1 text-xs text-rose-600 hover:text-rose-800 font-semibold ml-auto hover:underline"
+              className="inline-flex items-center gap-1 text-xs text-red-400 hover:text-red-300 font-semibold ml-auto hover:underline"
             >
               <RotateCcw className="w-3 h-3" />
               Reset Filters
@@ -383,8 +383,8 @@ export default function TransactionsPage() {
         ) : (
           <div>
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm text-gray-600">
-                <thead className="bg-gray-50/80 text-xs font-semibold uppercase text-gray-400 border-b border-gray-100">
+              <table className="w-full text-left text-sm text-zinc-300">
+                <thead className="bg-zinc-900 text-xs font-bold uppercase text-zinc-400 border-b border-zinc-800">
                   <tr>
                     <th className="px-6 py-4">Transaction</th>
                     <th className="px-6 py-4">Category</th>
@@ -394,33 +394,33 @@ export default function TransactionsPage() {
                     <th className="px-6 py-4 text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-100">
+                <tbody className="divide-y divide-zinc-800/80">
                   {paginatedTransactions.map((txn) => {
                     const isIncome = txn.type === 'income';
                     return (
                       <tr
                         key={txn.id}
-                        className="hover:bg-gray-50/70 transition-colors group"
+                        className="hover:bg-zinc-800/40 transition-colors group"
                       >
                         <td className="px-6 py-4">
                           <div className="flex items-center gap-3">
                             <div
                               className={cn(
                                 'w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0',
-                                isIncome ? 'bg-emerald-50' : 'bg-rose-50'
+                                isIncome ? 'bg-emerald-950/60 border border-emerald-800/40' : 'bg-red-950/60 border border-red-800/40'
                               )}
                             >
                               {isIncome ? (
-                                <ArrowDownLeft className="w-4 h-4 text-emerald-600" />
+                                <ArrowDownLeft className="w-4 h-4 text-emerald-400" />
                               ) : (
-                                <ArrowUpRight className="w-4 h-4 text-rose-500" />
+                                <ArrowUpRight className="w-4 h-4 text-red-400" />
                               )}
                             </div>
                             <div className="min-w-0 max-w-xs">
-                              <p className="font-semibold text-gray-900 truncate">
+                              <p className="font-bold text-white truncate">
                                 {txn.description}
                               </p>
-                              <span className="text-xs text-gray-400 capitalize">
+                              <span className="text-xs text-zinc-500 capitalize">
                                 {txn.type}
                               </span>
                             </div>
@@ -428,21 +428,21 @@ export default function TransactionsPage() {
                         </td>
 
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <Badge color={isIncome ? 'green' : 'blue'}>
+                          <Badge color={isIncome ? 'green' : 'red'}>
                             {getCategoryLabel(txn.type, txn.category)}
                           </Badge>
                         </td>
 
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="flex items-center gap-1.5 text-xs text-gray-500">
-                            <CreditCard className="w-3.5 h-3.5 text-gray-400" />
+                          <div className="flex items-center gap-1.5 text-xs text-zinc-400">
+                            <CreditCard className="w-3.5 h-3.5 text-zinc-500" />
                             <span>{getPaymentMethodLabel(txn.payment_method)}</span>
                           </div>
                         </td>
 
-                        <td className="px-6 py-4 whitespace-nowrap text-xs text-gray-500">
+                        <td className="px-6 py-4 whitespace-nowrap text-xs text-zinc-400">
                           <div className="flex items-center gap-1.5">
-                            <Calendar className="w-3.5 h-3.5 text-gray-400" />
+                            <Calendar className="w-3.5 h-3.5 text-zinc-500" />
                             <span>{formatDate(txn.date, 'medium')}</span>
                           </div>
                         </td>
@@ -451,7 +451,7 @@ export default function TransactionsPage() {
                           <span
                             className={cn(
                               'font-bold text-sm',
-                              isIncome ? 'text-emerald-600' : 'text-gray-900'
+                              isIncome ? 'text-emerald-400' : 'text-zinc-100'
                             )}
                           >
                             {isIncome ? '+' : '-'}
@@ -464,14 +464,14 @@ export default function TransactionsPage() {
                           <div className="flex items-center justify-end gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
                             <button
                               onClick={() => handleOpenEditModal(txn)}
-                              className="p-1.5 text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
+                              className="p-1.5 text-zinc-400 hover:text-red-400 hover:bg-zinc-800 rounded-lg transition-colors"
                               title="Edit transaction"
                             >
                               <Pencil className="w-3.5 h-3.5" />
                             </button>
                             <button
                               onClick={() => setDeletingTransaction(txn)}
-                              className="p-1.5 text-gray-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
+                              className="p-1.5 text-zinc-400 hover:text-red-400 hover:bg-zinc-800 rounded-lg transition-colors"
                               title="Delete transaction"
                             >
                               <Trash2 className="w-3.5 h-3.5" />
@@ -487,10 +487,10 @@ export default function TransactionsPage() {
 
             {/* Pagination Controls */}
             {totalPages > 1 && (
-              <div className="flex items-center justify-between px-6 py-3.5 border-t border-gray-100 bg-gray-50/50 text-xs text-gray-500">
+              <div className="flex items-center justify-between px-6 py-3.5 border-t border-zinc-800 bg-zinc-900/60 text-xs text-zinc-400">
                 <span>
-                  Showing page <strong className="text-gray-800">{currentPage}</strong> of{' '}
-                  <strong className="text-gray-800">{totalPages}</strong>
+                  Showing page <strong className="text-zinc-200">{currentPage}</strong> of{' '}
+                  <strong className="text-zinc-200">{totalPages}</strong>
                 </span>
                 <div className="flex items-center gap-1.5">
                   <Button

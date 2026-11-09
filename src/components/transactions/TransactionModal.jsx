@@ -103,19 +103,19 @@ export default function TransactionModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-in fade-in duration-150">
       <div
-        className="bg-white rounded-2xl shadow-2xl border border-gray-100 w-full max-w-lg overflow-hidden"
+        className="bg-[#12131a] rounded-2xl shadow-2xl border border-zinc-800 w-full max-w-lg overflow-hidden text-zinc-100"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-          <h3 className="text-lg font-bold text-gray-900">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-800">
+          <h3 className="text-lg font-black text-white">
             {transaction ? 'Edit Transaction' : 'Add Transaction'}
           </h3>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+            className="p-1 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -124,21 +124,21 @@ export default function TransactionModal({
         {/* Modal Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {error && (
-            <div className="p-3 bg-rose-50 text-rose-700 text-xs rounded-xl border border-rose-200">
+            <div className="p-3 bg-red-950/40 text-red-300 text-xs rounded-xl border border-red-800/60">
               {error}
             </div>
           )}
 
           {/* Type Toggle Tabs */}
-          <div className="grid grid-cols-2 gap-2 p-1 bg-gray-100 rounded-xl">
+          <div className="grid grid-cols-2 gap-2 p-1 bg-zinc-900 border border-zinc-800 rounded-xl">
             <button
               type="button"
               onClick={() => handleTypeChange(TRANSACTION_TYPES.EXPENSE)}
               className={cn(
                 'flex items-center justify-center gap-2 py-2 text-sm font-semibold rounded-lg transition-all',
                 type === TRANSACTION_TYPES.EXPENSE
-                  ? 'bg-white text-rose-600 shadow-sm'
-                  : 'text-gray-500 hover:text-gray-900'
+                  ? 'bg-zinc-800 text-red-400 shadow-md'
+                  : 'text-zinc-500 hover:text-zinc-200'
               )}
             >
               <ArrowUpRight className="w-4 h-4" />
@@ -150,8 +150,8 @@ export default function TransactionModal({
               className={cn(
                 'flex items-center justify-center gap-2 py-2 text-sm font-semibold rounded-lg transition-all',
                 type === TRANSACTION_TYPES.INCOME
-                  ? 'bg-white text-emerald-600 shadow-sm'
-                  : 'text-gray-500 hover:text-gray-900'
+                  ? 'bg-zinc-800 text-emerald-400 shadow-md'
+                  : 'text-zinc-500 hover:text-zinc-200'
               )}
             >
               <ArrowDownLeft className="w-4 h-4" />
@@ -161,11 +161,11 @@ export default function TransactionModal({
 
           {/* Amount */}
           <div>
-            <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1">
+            <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-1">
               Amount ({currency})
             </label>
             <div className="relative">
-              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-base">
+              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500 font-bold text-base">
                 {currencySymbol}
               </span>
               <input
@@ -176,14 +176,14 @@ export default function TransactionModal({
                 placeholder="0.00"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-                className="w-full pl-9 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-base font-bold text-gray-900 focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
+                className="w-full pl-9 pr-4 py-2.5 bg-[#161722] border border-zinc-800 rounded-xl text-base font-bold text-white focus:bg-[#1b1c29] focus:ring-2 focus:ring-red-600 outline-none"
               />
             </div>
           </div>
 
           {/* Description */}
           <div>
-            <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1">
+            <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-1">
               Description
             </label>
             <input
@@ -192,23 +192,23 @@ export default function TransactionModal({
               placeholder="e.g. Monthly Grocery Restock"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-3.5 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none"
+              className="w-full px-3.5 py-2 bg-[#161722] border border-zinc-800 rounded-xl text-sm focus:bg-[#1b1c29] focus:ring-2 focus:ring-red-600 outline-none text-zinc-100 placeholder-zinc-500"
             />
           </div>
 
           {/* Category & Payment Method in grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1">
+              <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-1">
                 Category
               </label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none text-gray-800"
+                className="w-full px-3 py-2 bg-[#161722] border border-zinc-800 rounded-xl text-sm focus:bg-[#1b1c29] focus:ring-2 focus:ring-red-600 outline-none text-zinc-200 cursor-pointer"
               >
                 {categories.map((c) => (
-                  <option key={c.id} value={c.id}>
+                  <option key={c.id} value={c.id} className="bg-[#12131a] text-zinc-200">
                     {c.label}
                   </option>
                 ))}
@@ -216,16 +216,16 @@ export default function TransactionModal({
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1">
+              <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-1">
                 Payment Method
               </label>
               <select
                 value={paymentMethod}
                 onChange={(e) => setPaymentMethod(e.target.value)}
-                className="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none text-gray-800"
+                className="w-full px-3 py-2 bg-[#161722] border border-zinc-800 rounded-xl text-sm focus:bg-[#1b1c29] focus:ring-2 focus:ring-red-600 outline-none text-zinc-200 cursor-pointer"
               >
                 {PAYMENT_METHODS.map((p) => (
-                  <option key={p.id} value={p.id}>
+                  <option key={p.id} value={p.id} className="bg-[#12131a] text-zinc-200">
                     {p.label}
                   </option>
                 ))}
@@ -235,7 +235,7 @@ export default function TransactionModal({
 
           {/* Date */}
           <div>
-            <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1">
+            <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-1">
               Date
             </label>
             <input
@@ -243,19 +243,19 @@ export default function TransactionModal({
               required
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="w-full px-3.5 py-2 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-emerald-500 outline-none text-gray-800"
+              className="w-full px-3.5 py-2 bg-[#161722] border border-zinc-800 rounded-xl text-sm focus:bg-[#1b1c29] focus:ring-2 focus:ring-red-600 outline-none text-zinc-200 cursor-pointer"
             />
           </div>
 
           {/* Actions */}
-          <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-100">
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-zinc-800">
             <Button type="button" variant="ghost" onClick={onClose}>
               Cancel
             </Button>
             <Button
               type="submit"
               loading={loading}
-              className={type === TRANSACTION_TYPES.EXPENSE ? 'bg-rose-600 hover:bg-rose-700 focus:ring-rose-500' : ''}
+              className={type === TRANSACTION_TYPES.EXPENSE ? 'bg-red-600 hover:bg-red-700 focus:ring-red-500 shadow-md shadow-red-950/80' : ''}
             >
               {transaction ? 'Save Changes' : 'Add Transaction'}
             </Button>

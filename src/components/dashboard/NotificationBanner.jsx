@@ -54,17 +54,17 @@ export default function NotificationBanner({ budgets = [], transactions = [] }) 
 
   return (
     <div
-      className={`relative flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-2xl border shadow-sm transition-all duration-200 ${
+      className={`relative flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-2xl border shadow-lg transition-all duration-200 ${
         isDanger
-          ? 'bg-rose-50/90 border-rose-200 text-rose-950'
-          : 'bg-amber-50/90 border-amber-200 text-amber-950'
+          ? 'bg-red-950/40 border-red-800/60 text-red-100 shadow-red-950/30'
+          : 'bg-amber-950/40 border-amber-800/60 text-amber-100'
       }`}
       role="alert"
     >
       <div className="flex items-start sm:items-center gap-3">
         <div
           className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 ${
-            isDanger ? 'bg-rose-100 text-rose-600' : 'bg-amber-100 text-amber-600'
+            isDanger ? 'bg-red-900/60 text-red-400 border border-red-700/50' : 'bg-amber-900/60 text-amber-400 border border-amber-700/50'
           }`}
         >
           {isDanger ? (
@@ -74,21 +74,21 @@ export default function NotificationBanner({ budgets = [], transactions = [] }) 
           )}
         </div>
         <div>
-          <h4 className="text-sm font-bold flex items-center gap-2">
+          <h4 className="text-sm font-bold flex items-center gap-2 text-white">
             {title}
             {budgetAlerts.length > 1 && (
               <span
                 className={`text-[10px] px-2 py-0.5 rounded-full font-semibold ${
                   isDanger
-                    ? 'bg-rose-200/80 text-rose-800'
-                    : 'bg-amber-200/80 text-amber-800'
+                    ? 'bg-red-900/80 text-red-200 border border-red-700/40'
+                    : 'bg-amber-900/80 text-amber-200 border border-amber-700/40'
                 }`}
               >
                 +{budgetAlerts.length - 1} more alert{budgetAlerts.length - 1 > 1 ? 's' : ''}
               </span>
             )}
           </h4>
-          <p className="text-xs text-gray-600 mt-0.5 max-w-2xl leading-relaxed">
+          <p className="text-xs text-zinc-300 mt-0.5 max-w-2xl leading-relaxed">
             {message}
           </p>
         </div>
@@ -97,10 +97,10 @@ export default function NotificationBanner({ budgets = [], transactions = [] }) 
       <div className="flex items-center gap-2 self-end sm:self-center flex-shrink-0">
         <Link
           to="/budgets"
-          className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl transition-colors ${
+          className={`inline-flex items-center gap-1.5 text-xs font-bold px-3.5 py-1.5 rounded-xl transition-colors ${
             isDanger
-              ? 'bg-rose-600 text-white hover:bg-rose-700 shadow-sm shadow-rose-600/20'
-              : 'bg-amber-600 text-white hover:bg-amber-700 shadow-sm shadow-amber-600/20'
+              ? 'bg-red-600 text-white hover:bg-red-700 shadow-md shadow-red-950/60'
+              : 'bg-amber-600 text-white hover:bg-amber-700'
           }`}
         >
           Manage Budgets
@@ -108,7 +108,7 @@ export default function NotificationBanner({ budgets = [], transactions = [] }) 
         </Link>
         <button
           onClick={() => setDismissed(true)}
-          className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-black/5 transition-colors"
+          className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-white/10 transition-colors"
           aria-label="Dismiss notification banner"
         >
           <X className="w-4 h-4" />

@@ -14,7 +14,7 @@ export default function Spinner({ size = 'md', className }) {
     <div className={cn('flex items-center justify-center', className)}>
       <div
         className={cn(
-          'rounded-full border-gray-200 border-t-emerald-600 animate-spin',
+          'rounded-full border-zinc-800 border-t-red-500 animate-spin',
           sizeMap[size]
         )}
       />
@@ -30,7 +30,7 @@ export function PageLoader() {
     <div className="flex items-center justify-center min-h-[400px]">
       <div className="flex flex-col items-center gap-3">
         <Spinner size="lg" />
-        <p className="text-sm text-gray-500">Loading...</p>
+        <p className="text-sm text-zinc-400">Loading...</p>
       </div>
     </div>
   );

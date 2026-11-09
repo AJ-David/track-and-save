@@ -4,12 +4,12 @@
 import { cn } from '../../lib/utils';
 
 const colorMap = {
-  green: 'bg-emerald-50 text-emerald-700',
-  red: 'bg-red-50 text-red-700',
-  blue: 'bg-blue-50 text-blue-700',
-  amber: 'bg-amber-50 text-amber-700',
-  purple: 'bg-purple-50 text-purple-700',
-  gray: 'bg-gray-100 text-gray-600',
+  green: 'bg-emerald-950/60 text-emerald-400 border border-emerald-800/40',
+  red: 'bg-red-950/60 text-red-400 border border-red-800/40',
+  blue: 'bg-cyan-950/60 text-cyan-400 border border-cyan-800/40',
+  amber: 'bg-amber-950/60 text-amber-400 border border-amber-800/40',
+  purple: 'bg-purple-950/60 text-purple-400 border border-purple-800/40',
+  gray: 'bg-zinc-800/80 text-zinc-300 border border-zinc-700/40',
 };
 
 export default function Badge({ children, color = 'gray', className }) {

@@ -29,11 +29,15 @@ export default function ProgressBar({
 
   // Dynamic color based on percentage
   const barColor =
-    percentage >= 90 ? 'bg-red-500' : percentage >= 75 ? 'bg-amber-500' : (colorMap[color] || colorMap.emerald);
+    percentage >= 90
+      ? 'bg-red-600 shadow-[0_0_8px_rgba(220,38,38,0.7)]'
+      : percentage >= 75
+      ? 'bg-amber-500'
+      : (colorMap[color] || 'bg-red-500');
 
   return (
     <div className={cn('w-full', className)}>
-      <div className={cn('w-full bg-gray-100 rounded-full overflow-hidden', sizeMap[size])}>
+      <div className={cn('w-full bg-zinc-850 bg-zinc-800 rounded-full overflow-hidden', sizeMap[size])}>
         <div
           className={cn('h-full rounded-full transition-all duration-500 ease-out', barColor)}
           style={{ width: `${percentage}%` }}
@@ -41,7 +45,7 @@ export default function ProgressBar({
       </div>
       {showLabel && (
         <div className="flex justify-between items-center mt-1">
-          <span className="text-xs text-gray-500">{percentage.toFixed(0)}%</span>
+          <span className="text-xs text-zinc-400">{percentage.toFixed(0)}%</span>
         </div>
       )}
     </div>

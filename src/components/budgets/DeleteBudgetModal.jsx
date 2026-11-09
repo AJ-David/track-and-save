@@ -25,24 +25,24 @@ export default function DeleteBudgetModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-in fade-in duration-150">
       <div
-        className="bg-white rounded-2xl shadow-2xl border border-gray-100 w-full max-w-md p-6 overflow-hidden"
+        className="bg-[#12131a] rounded-2xl shadow-2xl border border-zinc-800 w-full max-w-md p-6 overflow-hidden text-zinc-100"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center gap-3.5 mb-4">
-          <div className="w-11 h-11 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center flex-shrink-0">
+          <div className="w-11 h-11 rounded-xl bg-red-950/60 text-red-400 border border-red-800/40 flex items-center justify-center flex-shrink-0">
             <AlertTriangle className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="text-base font-bold text-gray-900">Delete Budget</h3>
-            <p className="text-xs text-gray-500">Remove spending limit for this category.</p>
+            <h3 className="text-base font-black text-white">Delete Budget</h3>
+            <p className="text-xs text-zinc-500">Remove spending limit for this category.</p>
           </div>
         </div>
 
-        <p className="text-sm text-gray-600 mb-4 bg-gray-50 p-3 rounded-xl border border-gray-100">
+        <p className="text-sm text-zinc-300 mb-4 bg-zinc-900/80 p-3 rounded-xl border border-zinc-800">
           Are you sure you want to delete the budget for{' '}
-          <strong className="text-gray-900">
+          <strong className="text-white">
             &quot;{budget.categoryLabel || budget.category}&quot;
           </strong>
           ?

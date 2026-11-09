@@ -23,9 +23,9 @@ function CustomTooltip({ active, payload }) {
   const { category, amount } = payload[0].payload;
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-3">
-      <p className="text-sm font-semibold text-gray-800">{getCategoryLabel(category)}</p>
-      <p className="text-xs text-gray-500">{formatCurrency(amount, currency)}</p>
+    <div className="bg-[#151620] rounded-xl shadow-2xl border border-zinc-700/80 p-3">
+      <p className="text-sm font-bold text-white">{getCategoryLabel(category)}</p>
+      <p className="text-xs text-zinc-400">{formatCurrency(amount, currency)}</p>
     </div>
   );
 }
@@ -47,7 +47,7 @@ export default function CategoryBreakdown({ data }) {
     <Card>
       <CardHeader>
         <CardTitle>Expense Breakdown</CardTitle>
-        <span className="text-xs text-gray-400">This month</span>
+        <span className="text-xs text-zinc-500">This month</span>
       </CardHeader>
 
       <div className="flex flex-col sm:flex-row items-center gap-6">
@@ -83,13 +83,13 @@ export default function CategoryBreakdown({ data }) {
                   className="w-3 h-3 rounded-full flex-shrink-0"
                   style={{ backgroundColor: item.color }}
                 />
-                <span className="text-sm text-gray-600 truncate">{item.label}</span>
+                <span className="text-sm text-zinc-300 truncate">{item.label}</span>
               </div>
               <div className="flex items-center gap-3 flex-shrink-0">
-                <span className="text-sm font-semibold text-gray-800">
+                <span className="text-sm font-bold text-zinc-100">
                   {formatCurrency(item.amount, currency)}
                 </span>
-                <span className="text-xs text-gray-400 w-12 text-right">
+                <span className="text-xs text-zinc-500 w-12 text-right">
                   {item.percentage}%
                 </span>
               </div>
