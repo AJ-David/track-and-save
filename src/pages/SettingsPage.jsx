@@ -27,7 +27,14 @@ function SettingSection({ icon: Icon, title, description, children }) {
 }
 
 export default function SettingsPage() {
-  const { currency, setCurrency } = useApp();
+  const {
+    currency,
+    setCurrency,
+    baseCurrency,
+    setBaseCurrency,
+    isConverted,
+    rateBadgeText,
+  } = useApp();
   const { user, profile, updateProfile, signOut } = useAuth();
   const toast = useToast();
   const navigate = useNavigate();
@@ -63,7 +70,7 @@ export default function SettingsPage() {
   const handleCurrencyChange = (e) => {
     const newCurr = e.target.value;
     setCurrency(newCurr);
-    toast.info(`Default currency switched to ${newCurr}`);
+    toast.info(`Display currency switched to ${newCurr}. Amounts converted using official exchange rates.`);
   };
 
   const handleSignOut = async () => {
@@ -131,23 +138,78 @@ export default function SettingsPage() {
         </SettingSection>
       </form>
 
-      {/* Currency Settings */}
+      {/* Currency Settings & Official Conversion */}
       <SettingSection
         icon={Globe}
-        title="Default Currency"
-        description="Choose your preferred currency for all financial calculations and displays."
+        title="Currency & Exchange Rates"
+        description="Switch your active viewing currency to convert all income, expenses, budgets and savings across the app using official exchange rates."
       >
-        <select
-          value={currency}
-          onChange={handleCurrencyChange}
-          className="w-full sm:w-auto px-3.5 py-2.5 bg-[#161722] border border-zinc-800 rounded-xl text-sm font-semibold text-zinc-200 focus:ring-2 focus:ring-red-600 outline-none transition-all cursor-pointer"
-        >
-          {Object.values(CURRENCIES).map((c) => (
-            <option key={c.code} value={c.code} className="bg-[#12131a] text-zinc-200">
-              {c.symbol} {c.name} ({c.code})
-            </option>
-          ))}
-        </select>
+        <div className="space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <label className="block text-xs font-bold text-zinc-300 uppercase tracking-wider mb-1">
+                Active Viewing Currency
+              </label>
+              <p className="text-xs text-zinc-500">
+                All ledger amounts convert in real-time to this currency.
+              </p>
+            </div>
+            <select
+              value={currency}
+              onChange={handleCurrencyChange}
+              className="w-full sm:w-auto px-3.5 py-2.5 bg-[#161722] border border-zinc-800 rounded-xl text-sm font-semibold text-zinc-200 focus:ring-2 focus:ring-red-600 outline-none transition-all cursor-pointer"
+            >
+              {Object.values(CURRENCIES).map((c) => (
+                <option key={c.code} value={c.code} className="bg-[#12131a] text-zinc-200">
+                  {c.symbol} {c.name} ({c.code})
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Official Conversion Overview Box */}
+          <div className="p-4 rounded-xl bg-zinc-900/70 border border-zinc-800/80 space-y-3">
+            <div className="flex items-center justify-between text-xs">
+              <span className="font-semibold text-zinc-400">Base Ledger Denomination:</span>
+              <span className="font-bold text-white px-2 py-0.5 rounded bg-zinc-800 border border-zinc-700">
+                {CURRENCIES[baseCurrency]?.name || baseCurrency} ({baseCurrency})
+              </span>
+            </div>
+
+            {isConverted && (
+              <div className="flex items-center justify-between text-xs pt-2 border-t border-zinc-800/60">
+                <span className="font-semibold text-zinc-400">Current Conversion Rate:</span>
+                <span className="font-mono font-bold text-red-400">
+                  {rateBadgeText}
+                </span>
+              </div>
+            )}
+
+            <div className="pt-2 border-t border-zinc-800/60">
+              <p className="text-[11px] font-bold uppercase tracking-wider text-zinc-500 mb-2">
+                Official Baseline Central Bank Rates (Anchor: 1 USD)
+              </p>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-mono">
+                <div className="p-2 rounded-lg bg-zinc-950 border border-zinc-800/70">
+                  <p className="text-zinc-500 text-[10px]">USD</p>
+                  <p className="text-zinc-200 font-bold">$1.00</p>
+                </div>
+                <div className="p-2 rounded-lg bg-zinc-950 border border-zinc-800/70">
+                  <p className="text-zinc-500 text-[10px]">EUR</p>
+                  <p className="text-zinc-200 font-bold">€0.92</p>
+                </div>
+                <div className="p-2 rounded-lg bg-zinc-950 border border-zinc-800/70">
+                  <p className="text-zinc-500 text-[10px]">GBP</p>
+                  <p className="text-zinc-200 font-bold">£0.785</p>
+                </div>
+                <div className="p-2 rounded-lg bg-zinc-950 border border-zinc-800/70">
+                  <p className="text-zinc-500 text-[10px]">NGN</p>
+                  <p className="text-red-400 font-bold">₦1,485.00</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </SettingSection>
 
       {/* Appearance Settings */}

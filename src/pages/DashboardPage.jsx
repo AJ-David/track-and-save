@@ -13,9 +13,11 @@ import { useAuth } from '../contexts/AuthContext';
 import { useTransactions } from '../hooks/useTransactions';
 import { useBudgets } from '../hooks/useBudgets';
 import { useSavings } from '../hooks/useSavings';
+import { useApp } from '../contexts/AppContext';
 
 export default function DashboardPage() {
   const { user, profile } = useAuth();
+  const { convertFromBase } = useApp();
   const [dateRange, setDateRange] = useState('this-month');
   const [isTxnModalOpen, setIsTxnModalOpen] = useState(false);
 
@@ -113,13 +115,14 @@ export default function DashboardPage() {
       const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
       const entry = months.find((m) => m.key === key);
       if (entry) {
-        if (t.type === 'income') entry.income += Number(t.amount || 0);
-        else entry.expenses += Number(t.amount || 0);
+        const amt = convertFromBase ? convertFromBase(t.amount || 0) : Number(t.amount || 0);
+        if (t.type === 'income') entry.income += amt;
+        else entry.expenses += amt;
       }
     });
 
     return months;
-  }, [transactions]);
+  }, [transactions, convertFromBase]);
 
   return (
     <div className="space-y-6">

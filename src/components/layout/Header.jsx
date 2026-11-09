@@ -32,7 +32,7 @@ const pageTitles = {
 };
 
 export default function Header() {
-  const { toggleSidebar, currency, setCurrency } = useApp();
+  const { toggleSidebar, currency, setCurrency, isConverted, rateBadgeText, baseCurrency } = useApp();
   const { user, profile } = useAuth();
   const location = useLocation();
   const pageTitle = pageTitles[location.pathname] || APP_NAME;
@@ -236,6 +236,7 @@ export default function Header() {
               value={currency}
               onChange={(e) => setCurrency(e.target.value)}
               className="bg-transparent border-none outline-none cursor-pointer text-xs font-medium text-zinc-300"
+              title="Change display currency (converts amounts via official rates)"
             >
               {Object.values(CURRENCIES).map((c) => (
                 <option key={c.code} value={c.code} className="bg-[#12131a] text-zinc-200">
@@ -244,6 +245,16 @@ export default function Header() {
               ))}
             </select>
           </div>
+
+          {/* Official Rate Conversion Indicator */}
+          {isConverted && rateBadgeText && (
+            <div
+              className="hidden lg:flex items-center gap-1 text-[11px] font-mono font-medium px-2 py-1 rounded-lg bg-red-950/40 text-red-400 border border-red-900/50"
+              title={`Converted using official rates against your base ledger (${baseCurrency})`}
+            >
+              <span>{rateBadgeText}</span>
+            </div>
+          )}
 
           {/* Global Spotlight Search Trigger */}
           <button

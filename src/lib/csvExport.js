@@ -1,8 +1,10 @@
 import { formatDate } from './formatters';
 import { EXPENSE_CATEGORIES, INCOME_CATEGORIES, PAYMENT_METHODS } from './constants';
+import { convertAmount, getBaseCurrency } from '../services/currencyService';
 
 /**
  * Convert transaction objects into a CSV string and trigger browser download.
+ * Converts transaction amounts to the selected export currency if it differs from base.
  * @param {Array} transactions
  * @param {string} currencyCode
  */
@@ -10,6 +12,8 @@ export function exportTransactionsToCSV(transactions = [], currencyCode = 'NGN')
   if (!transactions.length) {
     throw new Error('No transactions available to export.');
   }
+
+  const baseCode = getBaseCurrency();
 
   const getCategoryLabel = (type, id) => {
     const list = type === 'income' ? INCOME_CATEGORIES : EXPENSE_CATEGORIES;
@@ -31,16 +35,21 @@ export function exportTransactionsToCSV(transactions = [], currencyCode = 'NGN')
     'Currency',
   ];
 
-  // Map rows
-  const rows = transactions.map((t) => [
-    t.date || '',
-    `"${(t.description || '').replace(/"/g, '""')}"`,
-    t.type || 'expense',
-    `"${getCategoryLabel(t.type, t.category)}"`,
-    `"${getPaymentLabel(t.payment_method)}"`,
-    t.amount !== undefined ? t.amount : 0,
-    currencyCode,
-  ]);
+  // Map rows with currency conversion
+  const rows = transactions.map((t) => {
+    const rawAmt = t.amount !== undefined ? Number(t.amount) : 0;
+    const convertedAmt = convertAmount(rawAmt, baseCode, currencyCode);
+
+    return [
+      t.date || '',
+      `"${(t.description || '').replace(/"/g, '""')}"`,
+      t.type || 'expense',
+      `"${getCategoryLabel(t.type, t.category)}"`,
+      `"${getPaymentLabel(t.payment_method)}"`,
+      Number(convertedAmt.toFixed(2)),
+      currencyCode,
+    ];
+  });
 
   const csvContent = [headers.join(','), ...rows.map((r) => r.join(','))].join('\r\n');
 

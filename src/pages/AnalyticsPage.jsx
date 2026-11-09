@@ -17,7 +17,7 @@ import Spinner from '../components/ui/Spinner';
 import EmptyState from '../components/ui/EmptyState';
 import { useTransactions } from '../hooks/useTransactions';
 import { useSavings } from '../hooks/useSavings';
-import { formatCurrency } from '../lib/formatters';
+import { formatCurrency, formatDirectCurrency } from '../lib/formatters';
 import { useApp } from '../contexts/AppContext';
 import { useToast } from '../contexts/ToastContext';
 import { exportTransactionsToCSV } from '../lib/csvExport';
@@ -49,7 +49,7 @@ function CustomTooltip({ active, payload, label, currency }) {
             <span className="capitalize text-zinc-400 font-medium">{entry.name}:</span>
           </div>
           <span className="font-bold text-zinc-100">
-            {formatCurrency(entry.value, currency)}
+            {formatDirectCurrency(entry.value, currency)}
           </span>
         </div>
       ))}
@@ -58,7 +58,7 @@ function CustomTooltip({ active, payload, label, currency }) {
 }
 
 export default function AnalyticsPage() {
-  const { currency } = useApp();
+  const { currency, convertFromBase } = useApp();
   const toast = useToast();
   const { transactions, loading, error } = useTransactions();
   const { totals: savingsTotals } = useSavings();
@@ -109,7 +109,7 @@ export default function AnalyticsPage() {
       filteredTransactions.forEach((t) => {
         const d = new Date(t.date);
         const daysDiff = Math.floor((now - d) / (1000 * 60 * 60 * 24));
-        const amt = Number(t.amount || 0);
+        const amt = convertFromBase ? convertFromBase(t.amount || 0) : Number(t.amount || 0);
 
         for (const w of weeks) {
           if (daysDiff >= w.minDays && daysDiff <= w.maxDays) {
@@ -142,10 +142,11 @@ export default function AnalyticsPage() {
         monthMap[key] = { key, month: label, income: 0, expenses: 0, date: d };
       }
 
+      const amt = convertFromBase ? convertFromBase(t.amount || 0) : Number(t.amount || 0);
       if (t.type === 'income') {
-        monthMap[key].income += Number(t.amount || 0);
+        monthMap[key].income += amt;
       } else {
-        monthMap[key].expenses += Number(t.amount || 0);
+        monthMap[key].expenses += amt;
       }
     });
 
@@ -156,7 +157,7 @@ export default function AnalyticsPage() {
       savings: Math.max(0, m.income - m.expenses),
       net: m.income - m.expenses,
     }));
-  }, [filteredTransactions, dateRange]);
+  }, [filteredTransactions, dateRange, convertFromBase]);
 
   // Category-based expense breakdown
   const categoryStats = useMemo(() => {
@@ -166,7 +167,7 @@ export default function AnalyticsPage() {
     filteredTransactions
       .filter((t) => t.type === 'expense')
       .forEach((t) => {
-        const amt = Number(t.amount || 0);
+        const amt = convertFromBase ? convertFromBase(t.amount || 0) : Number(t.amount || 0);
         totalExpense += amt;
         map[t.category] = (map[t.category] || 0) + amt;
       });
@@ -183,7 +184,7 @@ export default function AnalyticsPage() {
         };
       })
       .sort((a, b) => b.amount - a.amount);
-  }, [filteredTransactions]);
+  }, [filteredTransactions, convertFromBase]);
 
   // Summary KPI Metrics
   const metrics = useMemo(() => {
@@ -192,7 +193,7 @@ export default function AnalyticsPage() {
     let expenseTxnCount = 0;
 
     filteredTransactions.forEach((t) => {
-      const amt = Number(t.amount || 0);
+      const amt = convertFromBase ? convertFromBase(t.amount || 0) : Number(t.amount || 0);
       if (t.type === 'income') {
         income += amt;
       } else {
@@ -213,7 +214,7 @@ export default function AnalyticsPage() {
       avgExpense,
       topCategory: categoryStats[0]?.name || 'None',
     };
-  }, [filteredTransactions, categoryStats]);
+  }, [filteredTransactions, categoryStats, convertFromBase]);
 
   // Handle CSV Export
   const handleExportCSV = () => {
@@ -327,7 +328,7 @@ export default function AnalyticsPage() {
                     Total Period Outflow
                   </p>
                   <p className="text-2xl font-black text-red-400 mt-1 tracking-tight">
-                    {formatCurrency(metrics.expenses, currency)}
+                    {formatDirectCurrency(metrics.expenses, currency)}
                   </p>
                 </div>
                 <div className="w-10 h-10 rounded-xl bg-red-950/60 border border-red-800/40 flex items-center justify-center text-red-400">
@@ -346,7 +347,7 @@ export default function AnalyticsPage() {
                     Net Cash Balance
                   </p>
                   <p className="text-2xl font-black text-white mt-1 tracking-tight">
-                    {formatCurrency(metrics.net, currency)}
+                    {formatDirectCurrency(metrics.net, currency)}
                   </p>
                 </div>
                 <div className="w-10 h-10 rounded-xl bg-zinc-800/80 border border-zinc-700/50 flex items-center justify-center text-zinc-100">
@@ -473,7 +474,7 @@ export default function AnalyticsPage() {
                         </div>
                         <div className="flex items-center gap-2">
                           <span className="font-bold text-zinc-100">
-                            {formatCurrency(item.amount, currency)}
+                            {formatDirectCurrency(item.amount, currency)}
                           </span>
                           <span className="text-zinc-500 w-12 text-right">
                             {item.percentage.toFixed(1)}%

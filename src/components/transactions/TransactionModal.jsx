@@ -17,7 +17,7 @@ export default function TransactionModal({
   onSubmit,
   transaction = null, // If provided, we are editing
 }) {
-  const { currency } = useApp();
+  const { currency, isConverted, convertFromBase, convertToBase, baseCurrency } = useApp();
   const currencySymbol = CURRENCIES[currency]?.symbol || '₦';
 
   const [type, setType] = useState(TRANSACTION_TYPES.EXPENSE);
@@ -34,7 +34,10 @@ export default function TransactionModal({
     if (transaction) {
       setType(transaction.type || TRANSACTION_TYPES.EXPENSE);
       setDescription(transaction.description || '');
-      setAmount(transaction.amount?.toString() || '');
+      const displayAmount = isConverted && convertFromBase
+        ? convertFromBase(transaction.amount)
+        : transaction.amount;
+      setAmount(displayAmount !== undefined && displayAmount !== null ? Number(displayAmount.toFixed(2)).toString() : '');
       setCategory(transaction.category || '');
       setDate(transaction.date || new Date().toISOString().split('T')[0]);
       setPaymentMethod(transaction.payment_method || 'debit_card');
@@ -47,7 +50,7 @@ export default function TransactionModal({
       setPaymentMethod('debit_card');
     }
     setError('');
-  }, [transaction, isOpen]);
+  }, [transaction, isOpen, isConverted, convertFromBase]);
 
   // Adjust default category on type toggle
   const handleTypeChange = (newType) => {
@@ -84,10 +87,13 @@ export default function TransactionModal({
 
     setLoading(true);
     try {
+      // If viewing in converted currency, convert back to user's base ledger currency
+      const amountInBase = isConverted && convertToBase ? convertToBase(numAmount) : numAmount;
+
       await onSubmit({
         type,
         description: description.trim(),
-        amount: numAmount,
+        amount: Number(amountInBase.toFixed(2)),
         category,
         date,
         payment_method: paymentMethod,
@@ -179,6 +185,19 @@ export default function TransactionModal({
                 className="w-full pl-9 pr-4 py-2.5 bg-[#161722] border border-zinc-800 rounded-xl text-base font-bold text-white focus:bg-[#1b1c29] focus:ring-2 focus:ring-red-600 outline-none"
               />
             </div>
+            {isConverted && amount && !isNaN(parseFloat(amount)) && parseFloat(amount) > 0 && (
+              <p className="text-[11px] text-zinc-400 mt-1.5 flex items-center justify-between font-mono">
+                <span>
+                  ≈ {CURRENCIES[baseCurrency]?.symbol}
+                  {Number(convertToBase(parseFloat(amount))).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}{' '}
+                  {baseCurrency} (base ledger)
+                </span>
+                <span className="text-red-400">Official rate</span>
+              </p>
+            )}
           </div>
 
           {/* Description */}

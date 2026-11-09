@@ -13,7 +13,7 @@ export default function BudgetModal({
   budget = null, // If editing
   defaultMonth = getCurrentMonthKey(),
 }) {
-  const { currency } = useApp();
+  const { currency, isConverted, convertFromBase, convertToBase, baseCurrency } = useApp();
   const currencySymbol = CURRENCIES[currency]?.symbol || '₦';
 
   const [category, setCategory] = useState(EXPENSE_CATEGORIES[0].id);
@@ -25,7 +25,9 @@ export default function BudgetModal({
   useEffect(() => {
     if (budget) {
       setCategory(budget.category || EXPENSE_CATEGORIES[0].id);
-      setLimitAmount(budget.limit_amount?.toString() || budget.limit?.toString() || '');
+      const rawLimit = budget.limit_amount ?? budget.limit;
+      const displayLimit = isConverted && convertFromBase ? convertFromBase(rawLimit) : rawLimit;
+      setLimitAmount(displayLimit !== undefined && displayLimit !== null ? Number(displayLimit.toFixed(2)).toString() : '');
       setMonth(budget.month || defaultMonth);
     } else {
       setCategory(EXPENSE_CATEGORIES[0].id);
@@ -33,7 +35,7 @@ export default function BudgetModal({
       setMonth(defaultMonth);
     }
     setError('');
-  }, [budget, defaultMonth, isOpen]);
+  }, [budget, defaultMonth, isOpen, isConverted, convertFromBase]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,10 +49,11 @@ export default function BudgetModal({
 
     setLoading(true);
     try {
+      const limitInBase = isConverted && convertToBase ? convertToBase(limit) : limit;
       await onSubmit({
         id: budget?.id,
         category,
-        limit_amount: limit,
+        limit_amount: Number(limitInBase.toFixed(2)),
         month,
       });
       onClose();
@@ -127,6 +130,19 @@ export default function BudgetModal({
                 className="w-full pl-9 pr-4 py-2.5 bg-[#161722] border border-zinc-800 rounded-xl text-base font-bold text-white focus:bg-[#1b1c29] focus:ring-2 focus:ring-red-600 outline-none"
               />
             </div>
+            {isConverted && limitAmount && !isNaN(parseFloat(limitAmount)) && parseFloat(limitAmount) > 0 && (
+              <p className="text-[11px] text-zinc-400 mt-1.5 flex items-center justify-between font-mono">
+                <span>
+                  ≈ {CURRENCIES[baseCurrency]?.symbol}
+                  {Number(convertToBase(parseFloat(limitAmount))).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}{' '}
+                  {baseCurrency} (base ledger)
+                </span>
+                <span className="text-red-400">Official rate</span>
+              </p>
+            )}
           </div>
 
           {/* Month */}

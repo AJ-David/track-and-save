@@ -2,28 +2,46 @@
  * Utility functions for formatting currency, dates and numbers.
  */
 import { CURRENCIES, DEFAULT_CURRENCY } from './constants';
+import { convertAmount, getBaseCurrency } from '../services/currencyService';
 
 /**
- * Format a number as currency.
- * @param {number} amount
- * @param {string} currencyCode - e.g. 'NGN', 'USD'
+ * Format a number as currency, automatically converting from the base currency
+ * if the display currency differs using official exchange rates.
+ * @param {number} amount - Amount in base currency (or source currency)
+ * @param {string} currencyCode - Target display currency (e.g. 'USD', 'EUR', 'NGN')
+ * @param {string|null} fromCurrencyCode - Source currency. If omitted, uses active base currency.
  * @returns {string}
  */
-export function formatCurrency(amount, currencyCode = DEFAULT_CURRENCY) {
+export function formatCurrency(amount, currencyCode = DEFAULT_CURRENCY, fromCurrencyCode = null) {
   const currency = CURRENCIES[currencyCode] || CURRENCIES[DEFAULT_CURRENCY];
+  const sourceCode = fromCurrencyCode || getBaseCurrency();
+
+  // Convert amount from base/source currency to display currency
+  const converted = convertAmount(amount, sourceCode, currency.code);
+
   try {
     return new Intl.NumberFormat(currency.locale, {
       style: 'currency',
       currency: currency.code,
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
-    }).format(amount);
+    }).format(converted);
   } catch {
-    return `${currency.symbol}${Number(amount).toLocaleString(undefined, {
+    return `${currency.symbol}${Number(converted).toLocaleString(undefined, {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     })}`;
   }
+}
+
+/**
+ * Format a number as currency directly without conversion (e.g. if already converted).
+ * @param {number} amount
+ * @param {string} currencyCode
+ * @returns {string}
+ */
+export function formatDirectCurrency(amount, currencyCode = DEFAULT_CURRENCY) {
+  return formatCurrency(amount, currencyCode, currencyCode);
 }
 
 /**

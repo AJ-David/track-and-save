@@ -20,7 +20,7 @@ export default function SavingsGoalModal({
   onSubmit,
   goal = null, // If editing
 }) {
-  const { currency } = useApp();
+  const { currency, isConverted, convertFromBase, convertToBase, baseCurrency } = useApp();
   const currencySymbol = CURRENCIES[currency]?.symbol || '₦';
 
   const [name, setName] = useState('');
@@ -34,8 +34,10 @@ export default function SavingsGoalModal({
   useEffect(() => {
     if (goal) {
       setName(goal.name || '');
-      setTargetAmount(goal.target_amount?.toString() || '');
-      setCurrentAmount(goal.current_amount?.toString() || '0');
+      const displayTarget = isConverted && convertFromBase ? convertFromBase(goal.target_amount) : goal.target_amount;
+      setTargetAmount(displayTarget !== undefined && displayTarget !== null ? Number(displayTarget.toFixed(2)).toString() : '');
+      const displayCurrent = isConverted && convertFromBase ? convertFromBase(goal.current_amount) : goal.current_amount;
+      setCurrentAmount(displayCurrent !== undefined && displayCurrent !== null ? Number(displayCurrent.toFixed(2)).toString() : '0');
       setDeadline(goal.deadline ? goal.deadline.split('T')[0] : '');
       setColor(goal.color || GOAL_COLORS[0]);
     } else {
@@ -49,7 +51,7 @@ export default function SavingsGoalModal({
       setColor(GOAL_COLORS[0]);
     }
     setError('');
-  }, [goal, isOpen]);
+  }, [goal, isOpen, isConverted, convertFromBase]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -79,11 +81,14 @@ export default function SavingsGoalModal({
 
     setLoading(true);
     try {
+      const targetInBase = isConverted && convertToBase ? convertToBase(target) : target;
+      const currentInBase = isConverted && convertToBase ? convertToBase(current) : current;
+
       await onSubmit({
         id: goal?.id,
         name: name.trim(),
-        target_amount: target,
-        current_amount: current,
+        target_amount: Number(targetInBase.toFixed(2)),
+        current_amount: Number(currentInBase.toFixed(2)),
         deadline,
         color,
       });
@@ -165,6 +170,19 @@ export default function SavingsGoalModal({
                 className="w-full pl-9 pr-4 py-2.5 bg-[#161722] border border-zinc-800 rounded-xl text-base font-bold text-white focus:bg-[#1b1c29] focus:ring-2 focus:ring-red-600 outline-none"
               />
             </div>
+            {isConverted && targetAmount && !isNaN(parseFloat(targetAmount)) && parseFloat(targetAmount) > 0 && (
+              <p className="text-[11px] text-zinc-400 mt-1.5 flex items-center justify-between font-mono">
+                <span>
+                  ≈ {CURRENCIES[baseCurrency]?.symbol}
+                  {Number(convertToBase(parseFloat(targetAmount))).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}{' '}
+                  {baseCurrency} (base ledger)
+                </span>
+                <span className="text-red-400">Official rate</span>
+              </p>
+            )}
           </div>
 
           {/* Current / Starting Amount */}

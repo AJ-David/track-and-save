@@ -9,7 +9,7 @@ import {
   Legend,
 } from 'recharts';
 import Card, { CardHeader, CardTitle } from '../ui/Card';
-import { formatCurrency } from '../../lib/formatters';
+import { formatDirectCurrency } from '../../lib/formatters';
 import { useApp } from '../../contexts/AppContext';
 
 function CustomTooltip({ active, payload, label }) {
@@ -30,7 +30,7 @@ function CustomTooltip({ active, payload, label }) {
             <span className="text-xs text-zinc-400 capitalize">{entry.name}</span>
           </div>
           <span className="text-xs font-bold text-zinc-100">
-            {formatCurrency(entry.value, currency)}
+            {formatDirectCurrency(entry.value, currency)}
           </span>
         </div>
       ))}

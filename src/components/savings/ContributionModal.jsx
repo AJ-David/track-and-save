@@ -11,7 +11,7 @@ export default function ContributionModal({
   onSubmit,
   goal,
 }) {
-  const { currency } = useApp();
+  const { currency, isConverted, convertToBase, baseCurrency } = useApp();
   const currencySymbol = CURRENCIES[currency]?.symbol || '₦';
 
   const [amount, setAmount] = useState('');
@@ -36,8 +36,9 @@ export default function ContributionModal({
 
     setLoading(true);
     try {
+      const depositInBase = isConverted && convertToBase ? convertToBase(depositAmount) : depositAmount;
       await onSubmit(goal.id, {
-        amount: depositAmount,
+        amount: Number(depositInBase.toFixed(2)),
         date,
         notes,
       });
@@ -117,6 +118,19 @@ export default function ContributionModal({
                 className="w-full pl-9 pr-4 py-2.5 bg-[#161722] border border-zinc-800 rounded-xl text-base font-bold text-white focus:bg-[#1b1c29] focus:ring-2 focus:ring-red-600 outline-none"
               />
             </div>
+            {isConverted && amount && !isNaN(parseFloat(amount)) && parseFloat(amount) > 0 && (
+              <p className="text-[11px] text-zinc-400 mt-1.5 flex items-center justify-between font-mono">
+                <span>
+                  ≈ {CURRENCIES[baseCurrency]?.symbol}
+                  {Number(convertToBase(parseFloat(amount))).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}{' '}
+                  {baseCurrency} (base ledger)
+                </span>
+                <span className="text-red-400">Official rate</span>
+              </p>
+            )}
           </div>
 
           {/* Date */}
