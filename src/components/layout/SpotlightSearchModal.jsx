@@ -16,8 +16,6 @@ import {
   Command,
   CornerDownLeft,
   ArrowRight,
-  ChevronUp,
-  ChevronDown,
 } from 'lucide-react';
 import { formatCurrency, formatDate } from '../../lib/formatters';
 
@@ -484,75 +482,35 @@ export default function SpotlightSearchModal({
           )}
         </div>
 
-        {/* Keyboard & Click Navigation Footer */}
-        <div className="px-4 py-2.5 border-t border-zinc-800/80 bg-[#0c0d12] flex flex-wrap items-center justify-between gap-2 text-xs text-zinc-500">
-          <div className="flex items-center gap-2 sm:gap-3">
-            {/* Interactive Navigate & Scroll Buttons */}
-            <div className="flex items-center bg-zinc-900 border border-zinc-800 rounded-lg p-0.5">
-              <button
-                type="button"
-                onClick={() => {
-                  if (flattenedItems.length === 0) return;
-                  isNavigatingWithKeys.current = true;
-                  setSelectedIndex((prev) => (prev - 1 + flattenedItems.length) % flattenedItems.length);
-                }}
-                className="p-1 rounded hover:bg-zinc-800 hover:text-white text-zinc-400 transition-colors cursor-pointer"
-                title="Scroll up to previous item (Arrow Up)"
-                aria-label="Previous item"
-              >
-                <ChevronUp className="w-3.5 h-3.5" />
-              </button>
-              <div className="w-[1px] h-3.5 bg-zinc-800 mx-0.5" />
-              <button
-                type="button"
-                onClick={() => {
-                  if (flattenedItems.length === 0) return;
-                  isNavigatingWithKeys.current = true;
-                  setSelectedIndex((prev) => (prev + 1) % flattenedItems.length);
-                }}
-                className="p-1 rounded hover:bg-zinc-800 hover:text-white text-zinc-400 transition-colors cursor-pointer"
-                title="Scroll down to next item (Arrow Down)"
-                aria-label="Next item"
-              >
-                <ChevronDown className="w-3.5 h-3.5" />
-              </button>
-              <span className="text-[11px] font-medium text-zinc-400 px-2">Navigate</span>
-            </div>
-
-            {/* Select Action Button */}
-            <button
-              type="button"
-              onClick={() => {
-                const current = flattenedItems[selectedIndex];
-                if (current) handleSelect(current);
-              }}
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 hover:text-zinc-200 text-zinc-400 transition-colors cursor-pointer"
-              title="Select active item (Enter)"
-            >
-              <kbd className="px-1 py-0.5 rounded bg-zinc-950 border border-zinc-800 text-[10px] font-mono text-zinc-400">
+        {/* Keyboard Navigation Footer */}
+        <div className="px-4 py-2.5 border-t border-zinc-800/80 bg-[#0c0d12] flex items-center justify-between text-xs text-zinc-500">
+          <div className="flex items-center gap-3">
+            <span className="flex items-center gap-1">
+              <kbd className="px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-[10px] font-mono text-zinc-400">
+                ↑
+              </kbd>
+              <kbd className="px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-[10px] font-mono text-zinc-400">
+                ↓
+              </kbd>
+              <span className="ml-0.5">Navigate</span>
+            </span>
+            <span className="flex items-center gap-1">
+              <kbd className="px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-[10px] font-mono text-zinc-400">
                 ↵
               </kbd>
-              <span className="text-[11px] font-medium hidden xs:inline">Select</span>
-            </button>
-
-            {/* Close Button */}
-            <button
-              type="button"
-              onClick={onClose}
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 hover:text-zinc-200 text-zinc-400 transition-colors cursor-pointer"
-              title="Close modal (Esc)"
-            >
-              <kbd className="px-1 py-0.5 rounded bg-zinc-950 border border-zinc-800 text-[10px] font-mono text-zinc-400">
+              <span className="ml-0.5">Select</span>
+            </span>
+            <span className="flex items-center gap-1">
+              <kbd className="px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-[10px] font-mono text-zinc-400">
                 Esc
               </kbd>
-              <span className="text-[11px] font-medium hidden xs:inline">Close</span>
-            </button>
+              <span className="ml-0.5">Close</span>
+            </span>
           </div>
-
-          <span className="text-zinc-500 font-mono text-[11px]">
+          <span className="hidden sm:inline text-zinc-600 font-mono text-[11px]">
             {flattenedItems.length > 0
               ? `${selectedIndex + 1} of ${flattenedItems.length} items`
-              : 'Spotlight Search'}
+              : 'Track & Save Spotlight'}
           </span>
         </div>
       </div>
